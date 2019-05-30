@@ -5,25 +5,34 @@ using UnityEngine.UI;
 public class UIColumn : MonoBehaviour
 {
     GameObject Button;
+    Button buttonscale;
     GameObject canvas;
     RectTransform rt;
     Vector2 pos;
-    Vector2 margin;
+    public Vector2 scale,buttonNum;
     // Start is called before the first frame update
     void Start()
     {
-        margin.x = 25;
-        margin.y = -25;
-        rt = GetComponent<RectTransform>();
-        pos = rt.anchoredPosition;
-        pos.x = -Screen.width * 0.5f + rt.rect.width * 0.5f + margin.x;
-        pos.y = Screen.height * 0.5f + rt.rect.height * 0.5f + margin.y;
         Button = Resources.Load<GameObject>("Prefab/Button");
+        buttonscale = Resources.Load<Button>("Prefab/Button");
         canvas = GameObject.Find("Canvas");
-        for (int i = 0; i < 10; i++)
+        rt = GetComponent<RectTransform>();
+        RectTransform buttonRect = buttonscale.GetComponent<RectTransform>();
+        buttonRect.sizeDelta = new Vector2(scale.x,scale.y);
+        pos = rt.anchoredPosition;
+        pos.x = -Screen.width * 0.5f + rt.rect.width * 0.5f + scale.x/2;
+        pos.y = Screen.height * 0.5f + rt.rect.height * 0.5f - scale.y/2;
+        Debug.Log(Screen.width);
+        for (int I = 0; I < buttonNum.y; I++)
         {
-            margin.x +=25;
-            Placement();
+            for (int i = 0; i < buttonNum.x; i++)
+            {
+               
+                Placement();
+                pos.x += (Screen.width - scale.x) / (buttonNum.x - 1);
+            }
+            pos.x = scale.x/2;
+            pos.y -= (Screen.height - scale.y) / (buttonNum.y - 1);
         }
     }
     void Placement()

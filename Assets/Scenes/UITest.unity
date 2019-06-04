@@ -466,8 +466,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6796ff1dc0f8c574a8509790a053761c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: {x: 30, y: 30}
-  buttonNum: {x: 9, y: 15}
+  buttonNum: {x: 20, y: 30}
+  _scale: 50
 --- !u!114 &1070338739
 MonoBehaviour:
   m_ObjectHideFlags: 0

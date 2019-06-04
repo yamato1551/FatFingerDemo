@@ -8,11 +8,14 @@ public class UIColumn : MonoBehaviour
     Button buttonscale;
     GameObject canvas;
     RectTransform rt;
-    Vector2 pos;
-    public Vector2 scale,buttonNum;
+    Vector2 pos, scale;
+    public Vector2 buttonNum;
+    public float _scale;
     // Start is called before the first frame update
     void Start()
     {
+        scale.x = _scale;
+        scale.y = _scale;
         Button = Resources.Load<GameObject>("Prefab/Button");
         buttonscale = Resources.Load<Button>("Prefab/Button");
         canvas = GameObject.Find("Canvas");

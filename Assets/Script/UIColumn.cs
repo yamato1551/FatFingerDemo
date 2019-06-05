@@ -12,6 +12,12 @@ public class UIColumn : MonoBehaviour
     public Vector2 buttonNum;
     public float _scale;
     // Start is called before the first frame update
+    public enum trans
+    {
+        Side,
+        Center,
+    }
+    public trans _trans;
     void Start()
     {
         scale.x = _scale;
@@ -21,26 +27,39 @@ public class UIColumn : MonoBehaviour
         canvas = GameObject.Find("Canvas");
         rt = GetComponent<RectTransform>();
         RectTransform buttonRect = buttonscale.GetComponent<RectTransform>();
-        buttonRect.sizeDelta = new Vector2(scale.x,scale.y);
+        buttonRect.sizeDelta = new Vector2(scale.x, scale.y);
         pos = rt.anchoredPosition;
-        pos.x = -Screen.width * 0.5f + rt.rect.width * 0.5f + scale.x/2;
-        pos.y = Screen.height * 0.5f + rt.rect.height * 0.5f - scale.y/2;
-        Debug.Log(Screen.width);
-        for (int I = 0; I < buttonNum.y; I++)
-        {
-            for (int i = 0; i < buttonNum.x; i++)
-            {
-               
+
+        switch (_trans) {
+            case trans.Side://左端に配置
+                pos.x = -Screen.width * 0.5f + rt.rect.width * 0.5f + scale.x / 2;
+                pos.y = Screen.height * 0.5f + rt.rect.height * 0.5f - scale.y / 2;
+                for (int I = 0; I < buttonNum.y; I++)
+                {
+                    for (int i = 0; i < buttonNum.x; i++)
+                    {
+
+                        Placement();
+                        pos.x += (Screen.width - scale.x) / (buttonNum.x - 1);
+                    }
+                    pos.x = scale.x / 2;
+                    pos.y -= (Screen.height - scale.y) / (buttonNum.y - 1);
+                }
+                break;
+
+            case trans.Center://中央に配置
+                pos.x = Screen.width*0.5f;
+                pos.y = Screen.height*0.5f;
                 Placement();
-                pos.x += (Screen.width - scale.x) / (buttonNum.x - 1);
-            }
-            pos.x = scale.x/2;
-            pos.y -= (Screen.height - scale.y) / (buttonNum.y - 1);
+                break;
         }
+        
+       
     }
     void Placement()
     {
         Button = Instantiate(Button, pos, Quaternion.identity) as GameObject;
         Button.transform.parent = canvas.transform;
     }
+    
 }

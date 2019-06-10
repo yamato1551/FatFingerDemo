@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 public class UI3Dtouch : MonoBehaviour
 {
+    [SerializeField]
     GameObject Button,_Button;
     Vector2 pos,Size;
     bool Push;
@@ -26,18 +27,21 @@ public class UI3Dtouch : MonoBehaviour
     }
     void Update()
     {
-        Debug.Log(Push);
-        foreach(GameObject i in instansButton)
+        //Debug.Log(TouchPressure);
+        
+        if (Input.touches.Length > 0)
         {
-            Debug.Log(i);
+            Debug.Log(Input.touches[0].pressure);
         }
-
+        
         if (Push)//3Dtouchで圧力によるUI生成
         {
             switch (TouchPressure) {
                 case 0:
-
-                    if (Input.touches.Length > 1)
+                    ButtonNum = 0;
+                    TouchPressure = 0;
+                    Button = Resources.Load<GameObject>("Prefab/3DtouchButton");
+                    if (Input.touches[0].pressure > 1)
                     {
                         pos.y += Size.y + 10;
                         Placement();
@@ -46,40 +50,47 @@ public class UI3Dtouch : MonoBehaviour
                     break;
 
                 case 1:
+                    Button = Resources.Load<GameObject>("Prefab/3DtouchButton");
 
-                    if (Input.touches.Length > 2)
+                    if (Input.touches[0].pressure > 2)
                     {
                         ButtonNum += 1;
                         pos.x -= Size.x - 10;
                         Placement();
                         TouchPressure += 1;
                     }
-                    if (Input.touches.Length < 1)
+
+                    if (Input.touches[0].pressure < 1)
                     {
                         ButtonNum -= 1;
-                        TouchPressure -= 1;
                         Destroy(instansButton[0]);
+                        TouchPressure -= 1;
                     }
                     break;
 
                 case 2:
-                    if (Input.touches.Length > 3)
+                    Button = Resources.Load<GameObject>("Prefab/3DtouchButton");
+
+                    if (Input.touches[0].pressure > 3)
                     {
                         ButtonNum += 1;
                         pos.y -= Size.y - 10;
                         Placement();
                         TouchPressure += 1;
                     }
-                    if (Input.touches.Length < 2)
+
+                    if (Input.touches[0].pressure < 2)
                     {
                         ButtonNum -= 1;
-                        TouchPressure -= 1;
                         Destroy(instansButton[1]);
+                        TouchPressure -= 1;
                     }
                     break;
 
                 case 3:
-                    if (Input.touches.Length > 4)
+                    Button = Resources.Load<GameObject>("Prefab/3DtouchButton");
+
+                    if (Input.touches[0].pressure > 4)
                     {
                         ButtonNum += 1;
                         pos.x += Size.x + 10;
@@ -87,22 +98,31 @@ public class UI3Dtouch : MonoBehaviour
                         TouchPressure += 1;
                     }
 
-                    if(Input.touches.Length < 3)
+                    if (Input.touches[0].pressure < 3)
                     {
                         ButtonNum -= 1;
-                        TouchPressure -= 1;
                         Destroy(instansButton[2]);
+                        TouchPressure -= 1;
                     }
                     break;
 
                 case 4:
-                    if (Input.touches.Length < 4)
+                    if (Input.touches[0].pressure < 4)
                     {
-                        ButtonNum -= 1;
-                        TouchPressure -= 1;
+                        //ButtonNum -= 1;
                         Destroy(instansButton[3]);
+                        TouchPressure -= 1;
                     }
                     break;
+            }
+        }
+        else
+        {
+            ButtonNum = 0;
+            TouchPressure = 0;
+            Button = Resources.Load<GameObject>("Prefab/3DtouchButton");
+            for (int i = 0; i < 4; i++) {
+                Destroy(instansButton[i]);
             }
         }
 

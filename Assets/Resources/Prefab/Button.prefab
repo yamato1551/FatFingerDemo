@@ -135,6 +135,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eaa64a4451c71b48817bd96038395de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Button: {fileID: 0}
+  _Button: {fileID: 0}
+  instansButton:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &5584727734124249998
 MonoBehaviour:
   m_ObjectHideFlags: 0

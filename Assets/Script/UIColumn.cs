@@ -24,7 +24,7 @@ public class UIColumn : MonoBehaviour
         scale.y = _scale;
         Button = Resources.Load<GameObject>("Prefab/Button");
         buttonscale = Resources.Load<Button>("Prefab/Button");
-        canvas = GameObject.Find("Canvas");
+        canvas = GameObject.Find("Canvas/BackGround");
         rt = GetComponent<RectTransform>();
         RectTransform buttonRect = buttonscale.GetComponent<RectTransform>();
         buttonRect.sizeDelta = new Vector2(scale.x, scale.y);

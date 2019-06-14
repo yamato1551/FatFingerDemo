@@ -8,7 +8,7 @@ public class UI3DtouchZoom : MonoBehaviour
     GameObject panel;
     Vector2 scale;
     bool push;
-    public RectTransform rect;
+    RectTransform rect;
     [System.Serializable]
     struct RangeClass
     {
@@ -25,19 +25,22 @@ public class UI3DtouchZoom : MonoBehaviour
 
     void Update()
     {
+       
         touchZoom();
+        UIOutSide();
     }
 
     void touchZoom()
     {
+   
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
             var touchpos = touch.position;
+            //rect.localPosition = new Vector2(touchpos.x, touchpos.y);
             if (touch.phase == TouchPhase.Began)
             {
                 push = true;
-                rect.localPosition = new Vector2(touchpos.x,touchpos.y);
             }
             if (touch.phase == TouchPhase.Ended)
             {
@@ -61,5 +64,27 @@ public class UI3DtouchZoom : MonoBehaviour
         {
             panel.transform.localScale = new Vector2(1, 1);
         }
+      
+    }
+    void UIOutSide()
+    {
+        var pos = rect.localPosition;
+        var _pos = panel.transform.position;
+
+        //var _pos = pos;//最初の値格納
+        //右端
+        if (pos.x + _pos.x < Screen.width / 2)
+        {
+            //pos.x = pos.x+_pos.x;
+        }
+        //左端
+        if (pos.x-_pos.x < Screen.width - Screen.width)
+        {
+            //pos.x = 0;
+        }
+        // Debug.Log(pos.x - _pos.x);
+        Debug.Log(pos);
+        rect.localPosition = new Vector2(pos.x, pos.y);
+
     }
 }

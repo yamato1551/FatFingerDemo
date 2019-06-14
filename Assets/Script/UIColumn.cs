@@ -20,6 +20,7 @@ public class UIColumn : MonoBehaviour
     public trans _trans;
     void Start()
     {
+        //一つの値で変更できるように
         scale.x = _scale;
         scale.y = _scale;
         Button = Resources.Load<GameObject>("Prefab/Button");

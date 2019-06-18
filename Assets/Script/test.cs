@@ -9,12 +9,13 @@ public class test : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        A = new int[11] { 1, 2, 4, 2, 5, 1, 3, 7, 4, 1, 3 };
-        for(int i = 1; i < 11; i++)
+        A = new int[5] {1,4,-1,3,2};
+        for(int i = 0; i < 5; i++)
         {
-            an += A[i];
+            an = A[i];
+            Debug.Log(an);
         }
-        Debug.Log(an);
+      
     }
 
     // Update is called once per frame

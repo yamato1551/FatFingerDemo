@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d80a9b583052594eba2dc9a5dadb83b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeout: 0
   ScaleLimit:
     min: 0
     max: 0
@@ -608,6 +609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d80a9b583052594eba2dc9a5dadb83b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeout: 0.5
   ScaleLimit:
     min: 1
     max: 4

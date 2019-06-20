@@ -8,10 +8,9 @@ public class UI3DtouchZoom : MonoBehaviour
     GameObject panel;
     Vector2 scale;
     bool push;
-    RectTransform rect;
+    RectTransform rect,canvas;
     Vector2 touchpos,_touchpos;
-    float timelapse;
-    public float timeout;
+    public int BlankArea;
     [System.Serializable]
     struct RangeClass
     {
@@ -23,6 +22,7 @@ public class UI3DtouchZoom : MonoBehaviour
     void Start()
     {
         rect = GameObject.Find("Canvas/BackGround").GetComponent<RectTransform>();
+        canvas = GameObject.Find("Canvas").GetComponent<RectTransform>();
         panel = GameObject.Find("Canvas/BackGround");
     }
 
@@ -59,7 +59,7 @@ public class UI3DtouchZoom : MonoBehaviour
             if (Input.touches[0].pressure > 0)
             {
                 //Debug.Log(Input.touches[0].pressure);
-                scale.x = Input.touches[0].pressure + 1;
+                scale.x = (Input.touches[0].pressure + 1)*1.5f;
                 scale.x = Mathf.Clamp(scale.x, ScaleLimit.min, ScaleLimit.max);
                 scale.y = scale.x;
             }
@@ -78,27 +78,33 @@ public class UI3DtouchZoom : MonoBehaviour
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
-            touchpos = touch.position;
+            //touchpos = touch.position;
+            //Debug.Log(touchpos);
             if (touch.phase == TouchPhase.Began)
             {
-               _touchpos = touchpos;
+                _touchpos = touchpos;
             }
-           
             if (push)
             {
-                timelapse += Time.deltaTime;
-                if (timelapse >= timeout)
+                var touchlocalpos = canvas.localPosition;
+
+                if ((Screen.width * 0.5f)+BlankArea < touchpos.x)//右
                 {
-                    _touchpos = touchpos;
-                    timelapse = 0;
+                    _touchpos.x -= 1;
                 }
-                if (_touchpos.x<touchpos.x)
+                if ((Screen.width * 0.5f)-BlankArea > touchpos.x)//左
                 {
-                    //var diff =touchpos.x-_touchpos.x;
-                    _touchpos.x -= 2;
-                    Debug.Log(touchpos);
-                    
+                    _touchpos.x += 1;
                 }
+                if ((Screen.height * 0.5f)+BlankArea < touchpos.y)//上
+                {
+                    _touchpos.y -= 1;
+                }
+                if ((Screen.height * 0.5f)-BlankArea > touchpos.y)//下
+                {
+                    _touchpos.y += 1;
+                }
+               
             }
             rect.position = new Vector2(_touchpos.x, _touchpos.y);
         }
@@ -123,9 +129,5 @@ public class UI3DtouchZoom : MonoBehaviour
         Debug.Log(pos);
         rect.localPosition = new Vector2(pos.x, pos.y);
 
-    }
-    void firstpositonReset()
-    {
-        _touchpos = touchpos;
     }
 }

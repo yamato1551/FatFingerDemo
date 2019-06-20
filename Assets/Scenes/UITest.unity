@@ -144,15 +144,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 297201504}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d80a9b583052594eba2dc9a5dadb83b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeout: 0
+  BlankArea: 0
   ScaleLimit:
-    min: 0
-    max: 0
+    min: 1
+    max: 2
 --- !u!4 &297201506
 Transform:
   m_ObjectHideFlags: 0
@@ -515,8 +515,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonNum: {x: 20, y: 20}
-  _scale: 40
-  _trans: 0
+  _scale: 100
+  _trans: 1
 --- !u!114 &1070338739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -609,7 +609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d80a9b583052594eba2dc9a5dadb83b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeout: 0.5
+  BlankArea: 100
   ScaleLimit:
     min: 1
-    max: 4
+    max: 3

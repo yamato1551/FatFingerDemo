@@ -24,9 +24,9 @@ public class UI3DtouchZoomTH : MonoBehaviour
             var touchpos = touch.position;
             //ボタン範囲内の場合
             if (buttonpos.x - (buttonsize.x / 2) < touchpos.x
-            || buttonpos.x + (buttonsize.x / 2) > touchpos.x
-            || buttonpos.y - (buttonsize.y / 2) < touchpos.y
-            || buttonpos.y + (buttonsize.y / 2) > touchpos.y)
+            && buttonpos.x + (buttonsize.x / 2) > touchpos.x
+            && buttonpos.y - (buttonsize.y / 2) < touchpos.y
+            && buttonpos.y + (buttonsize.y / 2) > touchpos.y)
             {
                 Debug.Log("範囲内");
             }

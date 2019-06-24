@@ -11,6 +11,8 @@ public class UI3DtouchZoom : MonoBehaviour
     RectTransform rect,canvas;
     Vector2 touchpos,_touchpos;
     public int BlankArea;
+    public float AdjustedvValue;
+    int speed;
     [System.Serializable]
     struct RangeClass
     {
@@ -18,7 +20,13 @@ public class UI3DtouchZoom : MonoBehaviour
     }
     [SerializeField]
     private RangeClass ScaleLimit;
-
+    public enum MoveChange
+    {
+        ConstantVelocity,
+        ExpansionSpeed,
+        ScreenMove,
+    }
+    public MoveChange _movechange;
     void Start()
     {
         rect = GameObject.Find("Canvas/BackGround").GetComponent<RectTransform>();
@@ -59,7 +67,7 @@ public class UI3DtouchZoom : MonoBehaviour
             if (Input.touches[0].pressure > 0)
             {
                 //Debug.Log(Input.touches[0].pressure);
-                scale.x = (Input.touches[0].pressure + 1)*1.5f;
+                scale.x = (Input.touches[0].pressure + 1);
                 scale.x = Mathf.Clamp(scale.x, ScaleLimit.min, ScaleLimit.max);
                 scale.y = scale.x;
             }
@@ -78,34 +86,121 @@ public class UI3DtouchZoom : MonoBehaviour
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
-            //touchpos = touch.position;
+            touchpos = touch.position;
+            Vector2 localpos = touch.deltaPosition;
             //Debug.Log(touchpos);
-            if (touch.phase == TouchPhase.Began)
+            switch (_movechange)
             {
-                _touchpos = touchpos;
-            }
-            if (push)
-            {
-                var touchlocalpos = canvas.localPosition;
+                case MoveChange.ScreenMove:
+                    if (push)
+                    {
+                        if ((Screen.width * 0.5f) + BlankArea < touchpos.x)//右
+                        {
+                            _touchpos.x -= localpos.x*AdjustedvValue;
 
-                if ((Screen.width * 0.5f)+BlankArea < touchpos.x)//右
-                {
-                    _touchpos.x -= 1;
-                }
-                if ((Screen.width * 0.5f)-BlankArea > touchpos.x)//左
-                {
-                    _touchpos.x += 1;
-                }
-                if ((Screen.height * 0.5f)+BlankArea < touchpos.y)//上
-                {
-                    _touchpos.y -= 1;
-                }
-                if ((Screen.height * 0.5f)-BlankArea > touchpos.y)//下
-                {
-                    _touchpos.y += 1;
-                }
-               
+                        }
+                        if ((Screen.width * 0.5f) - BlankArea > touchpos.x)//左
+                        {
+                            _touchpos.x += localpos.x*AdjustedvValue;
+                        }
+                        if ((Screen.height * 0.5f) + BlankArea < touchpos.y)//上
+                        {
+                            _touchpos.y -= localpos.y*AdjustedvValue;                            
+                        }
+                        if ((Screen.height * 0.5f) - BlankArea > touchpos.y)//下
+                        {
+                            _touchpos.y += localpos.y*AdjustedvValue;
+                        }
+
+                    }
+                    break;
+
+                case MoveChange.ExpansionSpeed:
+                    if (touch.phase == TouchPhase.Began)
+                    {
+                        _touchpos = touchpos;
+                    }
+                    if (localpos.x < 0)
+                    {
+                        localpos.x *= -1;
+                    }
+                    if (localpos.y < 0)
+                    {
+                        localpos.y *= -1;
+                    }
+                    if (scale.x < 1 && scale.y < 1)
+                    {
+                        speed = 8;
+                    }
+                    if (scale.x > 2 && scale.y > 2
+                        && scale.x < 3 && scale.y < 3)
+                    {
+                        speed = 6;
+                    }
+                    if (scale.x > 3 && scale.y > 3
+                        && scale.x < 4 && scale.y < 4)
+                    {
+                        speed = 4;
+                    }
+                    if (scale.x > 4 && scale.y > 4)
+                    {
+                        speed = 2;
+                    }
+                    if (push)
+                    {
+                        if ((Screen.width * 0.5f) + BlankArea < touchpos.x)//右
+                        {
+                            //_touchpos.x -= localpos.x*AdjustedvValue;
+                            _touchpos.x -= speed;
+                        }
+                        if ((Screen.width * 0.5f) - BlankArea > touchpos.x)//左
+                        {
+                            //_touchpos.x += localpos.x*AdjustedvValue;
+                            _touchpos.x += speed;
+                        }
+                        if ((Screen.height * 0.5f) + BlankArea < touchpos.y)//上
+                        {
+                            //_touchpos.y -= localpos.y*AdjustedvValue;
+                            _touchpos.y -= speed;
+                        }
+                        if ((Screen.height * 0.5f) - BlankArea > touchpos.y)//下
+                        {
+                            //_touchpos.y += localpos.y*AdjustedvValue;
+                            _touchpos.y += speed;
+
+                        }
+
+                    }
+                    break;
+                case MoveChange.ConstantVelocity:
+                    if (push)
+                    {
+                        if ((Screen.width * 0.5f) + BlankArea < touchpos.x)//右
+                        {
+                            _touchpos.x -= 2;
+                        }
+                        if ((Screen.width * 0.5f) - BlankArea > touchpos.x)//左
+                        {
+                            _touchpos.x += 2;
+                        }
+                        if ((Screen.height * 0.5f) + BlankArea < touchpos.y)//上
+                        {
+                            _touchpos.y -= 2;
+                        }
+                        if ((Screen.height * 0.5f) - BlankArea > touchpos.y)//下
+                        {
+                            _touchpos.y += 2;
+                        }
+
+                    }
+                    break;
+
             }
+           
+            Debug.Log(Input.touches[0].pressure);
+            Debug.Log(speed);
+           
+           
             rect.position = new Vector2(_touchpos.x, _touchpos.y);
         }
     }

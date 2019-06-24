@@ -150,9 +150,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BlankArea: 0
+  AdjustedvValue: 0
   ScaleLimit:
     min: 1
     max: 2
+  _movechange: 0
 --- !u!4 &297201506
 Transform:
   m_ObjectHideFlags: 0
@@ -514,8 +516,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6796ff1dc0f8c574a8509790a053761c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonNum: {x: 20, y: 20}
-  _scale: 20
+  buttonNum: {x: 20, y: 40}
+  _scale: 40
   _trans: 0
 --- !u!114 &1070338739
 MonoBehaviour:
@@ -610,6 +612,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BlankArea: 100
+  AdjustedvValue: 1.5
   ScaleLimit:
     min: 1
-    max: 3
+    max: 4
+  _movechange: 0

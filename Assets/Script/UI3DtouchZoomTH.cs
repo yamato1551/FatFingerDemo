@@ -28,7 +28,10 @@ public class UI3DtouchZoomTH : MonoBehaviour
             && buttonpos.y - (buttonsize.y / 2) < touchpos.y
             && buttonpos.y + (buttonsize.y / 2) > touchpos.y)
             {
-                Debug.Log("範囲内");
+                if (Input.touches[0].pressure > 5)
+                {
+                    SceneManager.LoadScene("DammyScene");
+                }
             }
             
         }

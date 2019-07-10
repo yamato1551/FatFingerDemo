@@ -5,9 +5,12 @@ using UnityEngine;
 public class PartialEnlargement : MonoBehaviour
 {
     GameObject SubCam;//サブカメラ格納
+    Camera _SubCam;
     Touch touch;
     Vector3 subcampos;//サブカメラのポジション
-    Vector2 touchpos;//タッチポジション
+    Vector2 touchpos//タッチポジション
+        , subcamrect;//サブカメラの発生位置
+        
 
     float PreVal;//圧力値
     public enum Method
@@ -20,7 +23,7 @@ public class PartialEnlargement : MonoBehaviour
     void Start()
     {
         SubCam = GameObject.Find("SubCamera");
-       
+        _SubCam = SubCam.GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -40,10 +43,19 @@ public class PartialEnlargement : MonoBehaviour
                 Debug.Log("touch:" + touch.position);
                 break;
             case Method.Lens://拡大画面が画面内の場合
+                touchState();
+                subcampos.x = touchpos.x;
+                subcampos.y = touchpos.y - 20;
+                subcampos.z = -984 + (PreVal * 100);
+                SubCam.transform.position = new Vector3(subcampos.x, subcampos.y, subcampos.z);
+                subcamrect.x = (touchpos.x / 1080)-0.1f;
+                subcamrect.y = (touchpos.y / 1920)+0.1f;
+                _SubCam.rect = new Rect(subcamrect.x,subcamrect.y, 0.2f, 0.1f);
+                Debug.Log("touch:" + touch.position);
                 break;
         }
     }
-    void touchState()
+    void touchState()//タッチしたさいの位置と圧力取得
     {
         if (Input.touchCount > 0)
         {

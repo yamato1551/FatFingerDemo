@@ -10,7 +10,7 @@ public class UI3DtouchZoomTH : MonoBehaviour
     }
     void Update()
     {
-        Invoke("ontouch", 0.1f);
+        ontouch();
     }
     void ontouch()
     {
@@ -28,14 +28,12 @@ public class UI3DtouchZoomTH : MonoBehaviour
             && buttonpos.y - (buttonsize.y / 2) < touchpos.y
             && buttonpos.y + (buttonsize.y / 2) > touchpos.y)
             {
-             
                 if (touch.phase == TouchPhase.Ended)
                 {
                     SceneManager.LoadScene("DammyScene");
                 }
             }
-         
-
+            
         }
     }
 }

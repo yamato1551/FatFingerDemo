@@ -451,7 +451,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 87.76851
+  field of view: 82.78595
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -476,8 +476,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 540, y: 962, z: -993}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 555, y: 948, z: -962}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -517,8 +517,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6796ff1dc0f8c574a8509790a053761c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonNum: {x: 25, y: 45}
-  _scale: 30
+  buttonNum: {x: 20, y: 40}
+  _scale: 40
   _trans: 0
 --- !u!114 &1070338739
 MonoBehaviour:
@@ -688,7 +688,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 00fc9b3b0f13f034d96bca26e3f52b7c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 62e820ec618d98f498d5d7de5b58ed46, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -752,7 +752,7 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 0.3
+    width: 0.2
     height: 0.1
   near clip plane: 0.3
   far clip plane: 1000
@@ -782,7 +782,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1482098224}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 547, y: 1376, z: -1000}
+  m_LocalPosition: {x: 547, y: 1376, z: -984}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

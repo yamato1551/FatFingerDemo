@@ -62,12 +62,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Script\PartialEnlargement.cs" />
-    <Compile Include="Assets\Script\test.cs" />
-    <Compile Include="Assets\Script\UI3Dtouch.cs" />
-    <Compile Include="Assets\Script\UI3DtouchZoom.cs" />
-    <Compile Include="Assets\Script\UI3DtouchZoomTH.cs" />
-    <Compile Include="Assets\Script\UIColumn.cs" />
+    <Compile Include="Assets\1.Script\PartialEnlargement.cs" />
+    <Compile Include="Assets\1.Script\SwitchScene.cs" />
+    <Compile Include="Assets\1.Script\test.cs" />
+    <Compile Include="Assets\1.Script\UI3Dtouch.cs" />
+    <Compile Include="Assets\1.Script\UI3DtouchZoom.cs" />
+    <Compile Include="Assets\1.Script\UI3DtouchZoomTH.cs" />
+    <Compile Include="Assets\1.Script\UIColumn.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/m0116311/Documents/GitHub/FatFingerDemo/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

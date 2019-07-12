@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/UITest.unity
+    path: Assets/2.Scenes/UITest.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/DammyScene.unity
+    path: Assets/2.Scenes/DammyScene.unity
     guid: 64c90be9fc0193045b51577c18e0f23f
   m_configObjects: {}

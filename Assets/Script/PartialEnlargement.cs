@@ -63,7 +63,6 @@ public class PartialEnlargement : MonoBehaviour
                 }
                 SubCam.transform.position = new Vector3(subcampos.x, subcampos.y, subcampos.z);
                 _SubCam.rect = new Rect(subcamrect.x, subcamrect.y, 0.3f, 0.15f);
-                Debug.Log("touch:" + touch.position);
                 break;
         }
     }

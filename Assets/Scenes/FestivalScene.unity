@@ -472,9 +472,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainUI: {fileID: 21300000, guid: 3ec64a2e74753c348ae6029f0c56ca5c, type: 3}
   SecondUI: {fileID: 0}
-  FingerRangeflag: 0
+  FingerRangeflag: 1
   Sound: {fileID: 8300000, guid: 69cd12d112416bc45a5ac19ffd1ca490, type: 3}
-  _trans: 2
+  _trans: 1
 --- !u!82 &1660953741
 AudioSource:
   m_ObjectHideFlags: 0

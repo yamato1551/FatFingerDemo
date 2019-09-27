@@ -5,6 +5,7 @@ using UnityEngine;
 public class PartialEnlargement : MonoBehaviour
 {
     GameObject SubCam;//サブカメラ格納
+    GameObject TouchposUI;//タッチした場所に出るUI
     Camera _SubCam;
     Touch touch;
     Vector3 subcampos;//サブカメラのポジション
@@ -12,6 +13,7 @@ public class PartialEnlargement : MonoBehaviour
         , subcamrect;//サブカメラの発生位置
     bool onflag = false;//圧力検知を行わせるフラグ
     float PreVal;//圧力値
+    public GameObject[] EnableObj;//見えなくするオブジェクト
     public enum Method
     {
         UpperPart,
@@ -21,22 +23,26 @@ public class PartialEnlargement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        TouchposUI = GameObject.Find("Image/Canvas/TouchPoint");
         SubCam = GameObject.Find("SubCamera");
         _SubCam = SubCam.GetComponent<Camera>();
         touchpos.x = 0; touchpos.y = 0;
         subcampos.x = 0; subcampos.y = 0;
         subcamrect.x = 0; subcamrect.y = 0;
+        for (int i = 0; i < EnableObj.Length; i++)//開始時に特定のオブジェクトを見えなくする
+        {
+            EnableObj[i].SetActive(false);
+        }
     }
-
-    // Update is called once per frame
     void Update()
     {
         subcampos = SubCam.transform.position;
-
+        touchState();
+        Debug.Log(touchpos);
+        //TouchLocation();
         switch (_method)//カメラの配置やuiの配置は手動
         {
             case Method.UpperPart://拡大画面が上部の場合,サブカメラの位置を変更しているだけ
-                touchState();
                 subcampos.x = touchpos.x;
                 subcampos.y = touchpos.y + 60;
                 subcampos.z = -1000 + (PreVal * 100);
@@ -46,7 +52,6 @@ public class PartialEnlargement : MonoBehaviour
                 break;
             case Method.Lens://拡大画面が画面内の場合
 
-                touchState();
                 //サブカメラの位置------------------------
                 subcampos.x = touchpos.x;
                 subcampos.y = touchpos.y;
@@ -66,6 +71,12 @@ public class PartialEnlargement : MonoBehaviour
                 break;
         }
     }
+    void TouchLocation()
+    {
+
+        TouchposUI.transform.position = touchpos;
+
+    }
     void touchState()//タッチした際の位置と圧力取得
     {
 
@@ -76,10 +87,18 @@ public class PartialEnlargement : MonoBehaviour
             if (touch.phase == TouchPhase.Began)
             {
                 onflag = true;
+                for (int i = 0; i < EnableObj.Length; i++)//開始時に特定のオブジェクトを見えなくする
+                {
+                    EnableObj[i].SetActive(true);
+                }
             }
             if (touch.phase == TouchPhase.Ended)
             {
                 onflag = false;
+                for (int i = 0; i < EnableObj.Length; i++)//開始時に特定のオブジェクトを見えなくする
+                {
+                    EnableObj[i].SetActive(false);
+                }
             }
 
         }

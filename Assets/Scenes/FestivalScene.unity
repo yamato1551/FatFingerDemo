@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -184,7 +184,7 @@ RectTransform:
   m_GameObject: {fileID: 953165820}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 5781298117993931671}
   m_RootOrder: 3
@@ -375,7 +375,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 87.27565
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -533,10 +533,10 @@ RectTransform:
   m_Father: {fileID: 5781298117993931671}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.32623157, y: 0.5487752}
-  m_AnchorMax: {x: 0.32623157, y: 0.5487752}
+  m_AnchorMin: {x: 0.5, y: 0.11800001}
+  m_AnchorMax: {x: 0.5, y: 0.11800001}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 200}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1660953740
 MonoBehaviour:
@@ -551,10 +551,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainUI: {fileID: 21300000, guid: 3ec64a2e74753c348ae6029f0c56ca5c, type: 3}
-  SecondUI: {fileID: 0}
-  FingerRangeflag: 1
+  SecondUI: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  PoPUI: {fileID: 2886201318165763891, guid: 6ab97180251826f4caa922eacd91c419, type: 3}
+  FingerRangeflag: 0
   Sound: {fileID: 8300000, guid: 69cd12d112416bc45a5ac19ffd1ca490, type: 3}
-  _trans: 1
+  _trans: 3
 --- !u!82 &1660953741
 AudioSource:
   m_ObjectHideFlags: 0
@@ -842,7 +843,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &5781298117475863756
 MonoBehaviour:
   m_ObjectHideFlags: 0

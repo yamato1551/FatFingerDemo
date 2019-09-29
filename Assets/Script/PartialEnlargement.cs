@@ -23,12 +23,12 @@ public class PartialEnlargement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TouchposUI = GameObject.Find("Image/Canvas/TouchPoint");
+        TouchposUI = GameObject.Find("Canvas/TouchPoint");
         SubCam = GameObject.Find("SubCamera");
         _SubCam = SubCam.GetComponent<Camera>();
-        touchpos.x = 0; touchpos.y = 0;
-        subcampos.x = 0; subcampos.y = 0;
-        subcamrect.x = 0; subcamrect.y = 0;
+        //touchpos.x = 0; touchpos.y = 0;
+        //subcampos.x = 0; subcampos.y = 0;
+        //subcamrect.x = 0; subcamrect.y = 0;
         for (int i = 0; i < EnableObj.Length; i++)//開始時に特定のオブジェクトを見えなくする
         {
             EnableObj[i].SetActive(false);
@@ -38,8 +38,9 @@ public class PartialEnlargement : MonoBehaviour
     {
         subcampos = SubCam.transform.position;
         touchState();
-        Debug.Log(touchpos);
-        //TouchLocation();
+       
+        TouchLocation();
+
         switch (_method)//カメラの配置やuiの配置は手動
         {
             case Method.UpperPart://拡大画面が上部の場合,サブカメラの位置を変更しているだけ

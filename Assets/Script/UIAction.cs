@@ -5,19 +5,23 @@ using UnityEngine.UI;
 public class UIAction : MonoBehaviour
 {
     public Sprite MainUI,SecondUI;
+    public GameObject PoPUI;
+    GameObject canvas;
     Image ThisUI;
-    bool changeflag = true;
+    bool changeflag = false;
     public bool FingerRangeflag=false;
     public AudioClip Sound;
     private AudioSource audiosouce;
     public enum trans{
         changeUI,
         MoveUI,
-        OnSound
+        OnSound,
+        UIPop
     }
     public trans _trans;
     void Start()
     {
+        canvas = GameObject.Find("Canvas");
         audiosouce = gameObject.GetComponent<AudioSource>();
         ThisUI = this.GetComponent<Image>();
         ThisUI.sprite = MainUI;
@@ -36,7 +40,10 @@ public class UIAction : MonoBehaviour
                 UIMove();
                 break;
             case trans.OnSound:
-                PushOnSound();
+                SoundOn();
+                break;
+            case trans.UIPop:
+                PopUI();
                 break;
         }
 
@@ -86,13 +93,24 @@ public class UIAction : MonoBehaviour
         }
     }
 
-    void PushOnSound()
+    void SoundOn()
     {
        
         audiosouce.clip = Sound;
         if (FingerRangeflag == true)
         {
             audiosouce.Play();
+            FingerRangeflag = false;
+        }
+    }
+    void PopUI()
+    {
+        var UIpos = this.gameObject.transform.position;
+
+        if (FingerRangeflag == true)
+        {
+            var PrefabObj=Instantiate(PoPUI, new Vector2(UIpos.x, UIpos.y+20), Quaternion.identity);
+            PrefabObj.transform.parent = canvas.transform;
             FingerRangeflag = false;
         }
     }

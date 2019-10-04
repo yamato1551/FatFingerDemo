@@ -4,33 +4,40 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIAction : MonoBehaviour
 {
-    public Sprite MainUI,SecondUI;
+    public Sprite MainSprite, SecondSprite;
     public GameObject PoPUI;
     GameObject canvas;
-    Image ThisUI;
-    bool changeflag = false;
-    public bool FingerRangeflag=false;
+    Image MainUI;
+    bool changeflag = false,TapFlag;
+
     public AudioClip Sound;
     private AudioSource audiosouce;
+    float acceleration = 1;
+    ButtonTap buttontap;
     public enum trans{
         changeUI,
         MoveUI,
         OnSound,
-        UIPop
+        UIPop,
+        ChangeandMove
     }
     public trans _trans;
     void Start()
     {
+        buttontap = GetComponentInChildren<ButtonTap>();
         canvas = GameObject.Find("Canvas");
         audiosouce = gameObject.GetComponent<AudioSource>();
-        ThisUI = this.GetComponent<Image>();
-        ThisUI.sprite = MainUI;
+        MainUI = gameObject.GetComponent<Image>();
+        MainUI.sprite = MainSprite;
+       
+
     }
 
-    // Update is called once per frame
     void Update()
     {
-        UIrange();
+        TapFlag = buttontap.FingerRangeflag;//別スクリプトからフラグ取得
+       
+        //動作変更
         switch (_trans)
         {
             case trans.changeUI:
@@ -45,6 +52,9 @@ public class UIAction : MonoBehaviour
             case trans.UIPop:
                 PopUI();
                 break;
+            case trans.ChangeandMove:
+                MoveandChange();
+                break;
         }
 
     }
@@ -52,28 +62,28 @@ public class UIAction : MonoBehaviour
     void UIChange()
     {
         
-        if (FingerRangeflag == true)
+        if (TapFlag == true)
         {
             Debug.Log("呼び出された");
             if (changeflag)
             {
-                ThisUI.sprite = MainUI;
-                FingerRangeflag = false;
+                MainUI.sprite = MainSprite;
+                TapFlag = false;
                 changeflag = false;
             }
             else
             {
-                ThisUI.sprite = SecondUI;
-                FingerRangeflag = false;
+                MainUI.sprite = SecondSprite;
+                TapFlag = false;
                 changeflag = true;
             }
-            FingerRangeflag = false;
+            TapFlag = false;
         }
     }
     void UIMove()
     {
         
-        if (FingerRangeflag == true)
+        if (TapFlag == true)
         {
             if (changeflag)
             {
@@ -84,7 +94,7 @@ public class UIAction : MonoBehaviour
             {
                 changeflag = true;
             }
-            FingerRangeflag = false;
+            TapFlag = false;
         }
         if (changeflag)
         {
@@ -97,42 +107,32 @@ public class UIAction : MonoBehaviour
     {
        
         audiosouce.clip = Sound;
-        if (FingerRangeflag == true)
+        if (TapFlag == true)
         {
             audiosouce.Play();
-            FingerRangeflag = false;
+            TapFlag = false;
         }
     }
     void PopUI()
     {
         var UIpos = this.gameObject.transform.position;
 
-        if (FingerRangeflag == true)
+        if (TapFlag == true)
         {
             var PrefabObj=Instantiate(PoPUI, new Vector2(UIpos.x, UIpos.y+20), Quaternion.identity);
             PrefabObj.transform.parent = canvas.transform;
-            FingerRangeflag = false;
+            TapFlag = false;
         }
     }
-    void UIrange()
+    void MoveandChange()
     {
-        var buttonpos = this.gameObject.transform.position;
-        var buttonsize = this.gameObject.GetComponent<RectTransform>().sizeDelta;
-        if (Input.touchCount > 0)
+        if (TapFlag)
         {
-            Touch touch = Input.GetTouch(0);
-            var touchpos = touch.position;
-
-            if (buttonpos.x - (buttonsize.x / 2) < touchpos.x
-           && buttonpos.x + (buttonsize.x / 2) > touchpos.x
-           && buttonpos.y - (buttonsize.y / 2) < touchpos.y
-           && buttonpos.y + (buttonsize.y / 2) > touchpos.y)
-            {
-                if (touch.phase == TouchPhase.Ended)
-                {
-                    FingerRangeflag = true;
-                }
-            }
+           
+            MainUI.sprite = SecondSprite;
+            acceleration = acceleration * 1.05f;
+            this.gameObject.transform.Translate(0, acceleration, 0);
         }
     }
+  
 }

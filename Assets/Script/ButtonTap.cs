@@ -6,17 +6,20 @@ public class ButtonTap : MonoBehaviour
 {
     public bool FingerRangeflag;
     Image ThisUI;
+
     void Start()
     {
         this.ThisUI = this.GetComponent<Image>();
+       
     }
     void Update()
     {
+        FingerRangeflag = false;
         //UIの発行--------------------------------------
         float alpha = Mathf.PingPong(Time.time, 1);
         ThisUI.color = new Color(1f, 1f, 1f, alpha);
         //----------------------------------------------
-
+     
         //ボタンの判定取得-------------------------------
         var buttonpos = this.gameObject.transform.position;
         var buttonsize = this.gameObject.GetComponent<RectTransform>().sizeDelta;
@@ -32,7 +35,10 @@ public class ButtonTap : MonoBehaviour
             {
                 if (touch.phase == TouchPhase.Ended)
                 {
+
+
                     FingerRangeflag = true;
+
                 }
             }
         }

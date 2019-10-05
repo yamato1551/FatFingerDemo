@@ -5,11 +5,13 @@ using UnityEngine.UI;
 public class UIAction : MonoBehaviour
 {
     public Sprite MainSprite, SecondSprite;
-    public GameObject PoPUI;
+    public Sprite[] RandomSprite;
+    public GameObject PoPUI,ButtonUI;
     GameObject canvas;
     Image MainUI;
-    bool changeflag = false,TapFlag;
-
+    bool changeflag = false;
+    public bool TapFlag;
+    int RandomI;
     public AudioClip Sound;
     private AudioSource audiosouce;
     float acceleration = 1;
@@ -19,11 +21,13 @@ public class UIAction : MonoBehaviour
         MoveUI,
         OnSound,
         UIPop,
-        ChangeandMove
+        ChangeandMove,
+        RandomUIChange
     }
     public trans _trans;
     void Start()
     {
+        RandomI = Random.Range(1, 4);
         buttontap = GetComponentInChildren<ButtonTap>();
         canvas = GameObject.Find("Canvas");
         audiosouce = gameObject.GetComponent<AudioSource>();
@@ -54,6 +58,9 @@ public class UIAction : MonoBehaviour
                 break;
             case trans.ChangeandMove:
                 MoveandChange();
+                break;
+            case trans.RandomUIChange:
+                UIChangeRandom();
                 break;
         }
 
@@ -128,11 +135,31 @@ public class UIAction : MonoBehaviour
     {
         if (TapFlag)
         {
-           
+            if (changeflag)
+            {
+
+                changeflag = false;
+            }
+            else
+            {
+                changeflag = true;
+            }
+            TapFlag = false;
+        }
+        if (changeflag)
+        {
             MainUI.sprite = SecondSprite;
             acceleration = acceleration * 1.05f;
             this.gameObject.transform.Translate(0, acceleration, 0);
         }
     }
-  
+   void UIChangeRandom()
+    {
+        if (TapFlag == true)
+        {
+            MainUI.sprite = RandomSprite[RandomI];
+            ButtonUI.SetActive(false);
+            TapFlag = false;
+        }
+    }
 }

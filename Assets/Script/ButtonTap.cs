@@ -35,10 +35,7 @@ public class ButtonTap : MonoBehaviour
             {
                 if (touch.phase == TouchPhase.Ended)
                 {
-
-
                     FingerRangeflag = true;
-
                 }
             }
         }

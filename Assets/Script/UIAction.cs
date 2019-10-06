@@ -9,8 +9,9 @@ public class UIAction : MonoBehaviour
     public GameObject PoPUI,ButtonUI;
     GameObject canvas;
     Image MainUI;
-    bool changeflag = false;
-    public bool TapFlag;
+    bool changeflag = false,
+        TapFlag;
+
     int RandomI;
     public AudioClip Sound;
     private AudioSource audiosouce;
@@ -22,12 +23,13 @@ public class UIAction : MonoBehaviour
         OnSound,
         UIPop,
         ChangeandMove,
-        RandomUIChange
+        RandomUIChange,
+        RandomUIChangeandSound
     }
     public trans _trans;
     void Start()
     {
-        RandomI = Random.Range(1, 4);
+       
         buttontap = GetComponentInChildren<ButtonTap>();
         canvas = GameObject.Find("Canvas");
         audiosouce = gameObject.GetComponent<AudioSource>();
@@ -40,7 +42,8 @@ public class UIAction : MonoBehaviour
     void Update()
     {
         TapFlag = buttontap.FingerRangeflag;//別スクリプトからフラグ取得
-       
+        RandomI = Random.Range(1, RandomSprite.Length);
+    
         //動作変更
         switch (_trans)
         {
@@ -61,6 +64,9 @@ public class UIAction : MonoBehaviour
                 break;
             case trans.RandomUIChange:
                 UIChangeRandom();
+                break;
+            case trans.RandomUIChangeandSound:
+                UIChangeRandomandSound();
                 break;
         }
 
@@ -155,11 +161,26 @@ public class UIAction : MonoBehaviour
     }
    void UIChangeRandom()
     {
-        if (TapFlag == true)
+        if (TapFlag)
         {
+            MainUI.sprite = null;
             MainUI.sprite = RandomSprite[RandomI];
-            ButtonUI.SetActive(false);
             TapFlag = false;
+            //ButtonUI.SetActive(false);
         }
+        
+    }
+    void UIChangeRandomandSound()
+    {
+        audiosouce.clip = Sound;
+        if (TapFlag)
+        {
+            MainUI.sprite = null;
+            MainUI.sprite = RandomSprite[RandomI];
+            audiosouce.Play();
+            TapFlag = false;
+            //ButtonUI.SetActive(false);
+        }
+
     }
 }

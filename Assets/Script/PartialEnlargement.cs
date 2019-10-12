@@ -12,7 +12,9 @@ public class PartialEnlargement : MonoBehaviour
     Vector2 touchpos//タッチポジション
         , subcamrect;//サブカメラの発生位置
     bool onflag = false;//圧力検知を行わせるフラグ
+    bool Lensflag=true;
     float PreVal;//圧力値
+    MagnifierCheck macheck;
     public GameObject[] EnableObj;//見えなくするオブジェクト
     public enum Method
     {
@@ -23,6 +25,7 @@ public class PartialEnlargement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        macheck = GameObject.Find("Canvas/LensOnOff").GetComponent<MagnifierCheck>();
         TouchposUI = GameObject.Find("Canvas/TouchPoint");
         SubCam = GameObject.Find("SubCamera");
         _SubCam = SubCam.GetComponent<Camera>();
@@ -36,10 +39,21 @@ public class PartialEnlargement : MonoBehaviour
     }
     void Update()
     {
-        subcampos = SubCam.transform.position;
-        touchState();
-       
-        TouchLocation();
+        Lensflag = macheck.Checkflag;
+        if (Lensflag)
+        {
+            subcampos = SubCam.transform.position;
+            touchState();
+
+            TouchLocation();
+        }
+        else
+        {
+            for (int i = 0; i < EnableObj.Length; i++)//開始時に特定のオブジェクトを見えなくする
+            {
+                EnableObj[i].SetActive(false);
+            }
+        }
 
         switch (_method)//カメラの配置やuiの配置は手動
         {
@@ -110,5 +124,9 @@ public class PartialEnlargement : MonoBehaviour
                 PreVal = Input.touches[0].pressure;
             }
         }
+    }
+    void Magnifier()
+    {
+
     }
 }

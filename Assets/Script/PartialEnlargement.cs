@@ -25,7 +25,7 @@ public class PartialEnlargement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        macheck = GameObject.Find("Canvas/LensOnOff").GetComponent<MagnifierCheck>();
+        //macheck = GameObject.Find("Canvas/LensOnOff").GetComponent<MagnifierCheck>();
         TouchposUI = GameObject.Find("Canvas/TouchPoint");
         SubCam = GameObject.Find("SubCamera");
         _SubCam = SubCam.GetComponent<Camera>();
@@ -39,7 +39,6 @@ public class PartialEnlargement : MonoBehaviour
     }
     void Update()
     {
-        Lensflag = macheck.Checkflag;
         if (Lensflag)
         {
             subcampos = SubCam.transform.position;
@@ -66,6 +65,7 @@ public class PartialEnlargement : MonoBehaviour
                 Debug.Log("touch:" + touch.position);
                 break;
             case Method.Lens://拡大画面が画面内の場合
+                Lensflag = macheck.Checkflag;
 
                 //サブカメラの位置------------------------
                 subcampos.x = touchpos.x;

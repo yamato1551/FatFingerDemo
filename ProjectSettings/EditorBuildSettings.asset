@@ -5,10 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/UITest.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/DammyScene.unity
     guid: 64c90be9fc0193045b51577c18e0f23f
+  - enabled: 1
+    path: Assets/Scenes/WebTest.unity
+    guid: 1169e7826df9f974dbc853d98c1c8c97
   m_configObjects: {}

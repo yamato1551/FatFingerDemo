@@ -29,9 +29,6 @@ public class PartialEnlargement : MonoBehaviour
         TouchposUI = GameObject.Find("Canvas/TouchPoint");
         SubCam = GameObject.Find("SubCamera");
         _SubCam = SubCam.GetComponent<Camera>();
-        //touchpos.x = 0; touchpos.y = 0;
-        //subcampos.x = 0; subcampos.y = 0;
-        //subcamrect.x = 0; subcamrect.y = 0;
         for (int i = 0; i < EnableObj.Length; i++)//開始時に特定のオブジェクトを見えなくする
         {
             EnableObj[i].SetActive(false);
@@ -57,8 +54,8 @@ public class PartialEnlargement : MonoBehaviour
         switch (_method)//カメラの配置やuiの配置は手動
         {
             case Method.UpperPart://拡大画面が上部の場合,サブカメラの位置を変更しているだけ
-                subcampos.x = touchpos.x;
-                subcampos.y = touchpos.y + 60;
+                subcampos.x = touchpos.x*3;
+                subcampos.y = touchpos.y*3;
                 subcampos.z = -1000 + (PreVal * 100);
                 SubCam.transform.position = new Vector3(subcampos.x, subcampos.y, subcampos.z);
                 Debug.Log("cam:" + subcampos);
@@ -89,7 +86,7 @@ public class PartialEnlargement : MonoBehaviour
     void TouchLocation()
     {
 
-        TouchposUI.transform.position = touchpos;
+        TouchposUI.transform.position = touchpos*3;
 
     }
     void touchState()//タッチした際の位置と圧力取得

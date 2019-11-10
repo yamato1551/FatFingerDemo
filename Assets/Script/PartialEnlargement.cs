@@ -54,12 +54,12 @@ public class PartialEnlargement : MonoBehaviour
         switch (_method)//カメラの配置やuiの配置は手動
         {
             case Method.UpperPart://拡大画面が上部の場合,サブカメラの位置を変更しているだけ
-                subcampos.x = touchpos.x*3;
-                subcampos.y = touchpos.y*3;
+                subcampos.x = touchpos.x;
+                subcampos.y = touchpos.y;
                 subcampos.z = -1000 + (PreVal * 100);
                 SubCam.transform.position = new Vector3(subcampos.x, subcampos.y, subcampos.z);
-                Debug.Log("cam:" + subcampos);
-                Debug.Log("touch:" + touch.position);
+                //Debug.Log("cam:" + subcampos);
+                //Debug.Log("touch:" + touch.position);
                 break;
             case Method.Lens://拡大画面が画面内の場合
                 Lensflag = macheck.Checkflag;
@@ -86,7 +86,7 @@ public class PartialEnlargement : MonoBehaviour
     void TouchLocation()
     {
 
-        TouchposUI.transform.position = touchpos*3;
+        TouchposUI.transform.position = touchpos;
 
     }
     void touchState()//タッチした際の位置と圧力取得

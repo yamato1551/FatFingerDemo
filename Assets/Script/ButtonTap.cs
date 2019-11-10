@@ -38,6 +38,7 @@ public class ButtonTap : MonoBehaviour
            && buttonpos.y - (buttonsize.y / 2) < touchpos.y
            && buttonpos.y + (buttonsize.y / 2) > touchpos.y)
             {
+
                 if (touch.phase == TouchPhase.Ended)
                 {
                     time = 0;

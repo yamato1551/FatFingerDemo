@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 //サブカメラの動き制御
 public class PartialEnlargement : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class PartialEnlargement : MonoBehaviour
     float PreVal;//圧力値
     MagnifierCheck macheck;
     public GameObject[] EnableObj;//見えなくするオブジェクト
+    public Text minmaxText;
     public enum Method
     {
         UpperPart,
@@ -26,6 +28,7 @@ public class PartialEnlargement : MonoBehaviour
     void Start()
     {
         //macheck = GameObject.Find("Canvas/LensOnOff").GetComponent<MagnifierCheck>();
+        minmaxText = minmaxText.GetComponent<Text>();
         TouchposUI = GameObject.Find("Canvas/TouchPoint");
         SubCam = GameObject.Find("SubCamera");
         _SubCam = SubCam.GetComponent<Camera>();
@@ -56,7 +59,7 @@ public class PartialEnlargement : MonoBehaviour
             case Method.UpperPart://拡大画面が上部の場合,サブカメラの位置を変更しているだけ
                 subcampos.x = touchpos.x;
                 subcampos.y = touchpos.y;
-                subcampos.z = -1000 + (PreVal * 100);
+                subcampos.z = -1000 + (PreVal * 500);
                 SubCam.transform.position = new Vector3(subcampos.x, subcampos.y, subcampos.z);
                 //Debug.Log("cam:" + subcampos);
                 //Debug.Log("touch:" + touch.position);
@@ -82,6 +85,8 @@ public class PartialEnlargement : MonoBehaviour
                 _SubCam.rect = new Rect(subcamrect.x, subcamrect.y, 0.3f, 0.15f);
                 break;
         }
+       
+        MinMaxTextChange();
     }
     void TouchLocation()
     {
@@ -110,6 +115,7 @@ public class PartialEnlargement : MonoBehaviour
                 for (int i = 0; i < EnableObj.Length; i++)//開始時に特定のオブジェクトを見えなくする
                 {
                     EnableObj[i].SetActive(false);
+                     
                 }
             }
 
@@ -119,11 +125,29 @@ public class PartialEnlargement : MonoBehaviour
             if (Input.touches[0].pressure > 0)
             {
                 PreVal = Input.touches[0].pressure;
+                PreVal = Mathf.Clamp(PreVal,0,1.5f);
+                Debug.Log(Input.touches[0].pressure);
             }
         }
     }
-    void Magnifier()
+    void MinMaxTextChange()
     {
+        if (Input.touchCount > 0)
+        {
+            // タッチ情報の取得
+            Touch touch = Input.GetTouch(0);
 
+            if (touch.phase == TouchPhase.Ended)
+            {
+                minmaxText.text = "Min=0,Max=150 : 0" ;
+                PreVal = 0;
+            }
+
+            if (touch.phase == TouchPhase.Moved)
+            {
+                minmaxText.text = "Min=0,Max=150 : " + Mathf.FloorToInt(PreVal * 100);
+            }
+        }
+       
     }
 }

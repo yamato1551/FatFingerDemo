@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 public class TapErrorDebug : MonoBehaviour
 {
     Image thisImage;
+    public int buttonNum;
+   
+    StreamWriter sw;
     public enum TouchResult
     {
         errorResult,
@@ -14,13 +18,13 @@ public class TapErrorDebug : MonoBehaviour
     void Start()
     {
         thisImage = this.gameObject.GetComponent<Image>();
+     
     }
     void Update()
     {
         var buttonpos = this.gameObject.transform.position;
         var buttonsize = this.gameObject.GetComponent<RectTransform>().sizeDelta;
         thisImage.color = new Color(1, 1, 1, 0);
-
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -34,6 +38,12 @@ public class TapErrorDebug : MonoBehaviour
                 thisImage.color = new Color(1, 1, 1, 100f / 255f);
                 if (touch.phase == TouchPhase.Ended)
                 {
+                    PartialEnlargement.touchTimes++;
+                    sw = new StreamWriter(Application.dataPath + "/TextData.txt", true);
+                    sw.WriteLine("タッチしたボタン:"+buttonNum+"タッチ回数:"+PartialEnlargement.touchTimes);// ファイルに書き出したあと改行
+                    sw.Flush();// StreamWriterのバッファに書き出し残しがないか確認
+                    sw.Close();// ファイルを閉じる
+                    /*
                     switch (touchResult)
                     {
                         case TouchResult.errorResult:
@@ -43,9 +53,10 @@ public class TapErrorDebug : MonoBehaviour
                             Debug.Log("Clear");
                             break;
                     }
+                    */
                 }
 
-            }
+            }/*
             else
             {
                 if (touch.phase == TouchPhase.Ended)
@@ -53,6 +64,8 @@ public class TapErrorDebug : MonoBehaviour
                     Debug.Log("OutOfError");
                 }
             }
+            */
+            
         }
     }
 }

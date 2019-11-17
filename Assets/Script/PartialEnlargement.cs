@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 //サブカメラの動き制御
 public class PartialEnlargement : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class PartialEnlargement : MonoBehaviour
     MagnifierCheck macheck;
     public GameObject[] EnableObj;//見えなくするオブジェクト
     public Text minmaxText;
+    public int notInitializationTimes;
+    public static int touchTimes = 0;
     public enum Method
     {
         UpperPart,
@@ -36,6 +39,7 @@ public class PartialEnlargement : MonoBehaviour
         {
             EnableObj[i].SetActive(false);
         }
+        SubjectNumber(notInitializationTimes);
     }
     void Update()
     {
@@ -126,7 +130,7 @@ public class PartialEnlargement : MonoBehaviour
             {
                 PreVal = Input.touches[0].pressure;
                 PreVal = Mathf.Clamp(PreVal,0,1.5f);
-                Debug.Log(Input.touches[0].pressure);
+                //Debug.Log(Input.touches[0].pressure);
             }
         }
     }
@@ -149,5 +153,12 @@ public class PartialEnlargement : MonoBehaviour
             }
         }
        
+    }
+    void SubjectNumber(int num)
+    {
+        StreamWriter sw = new StreamWriter(Application.dataPath + "/TextData.txt", true);
+        sw.WriteLine("被験者番号:"+num);// ファイルに書き出したあと改行
+        sw.Flush();// StreamWriterのバッファに書き出し残しがないか確認
+        sw.Close();// ファイルを閉じる
     }
 }

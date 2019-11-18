@@ -1942,7 +1942,7 @@ MonoBehaviour:
   EnableObj:
   - {fileID: 688568090}
   minmaxText: {fileID: 429406986}
-  notInitializationTimes: 2
+  notInitializationTimes: 1
   _method: 0
 --- !u!1 &1147292458
 GameObject:

@@ -1753,6 +1753,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SubCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 1220659895227929423, guid: 367c406a72cb0f24cb32fdc9f786e4a3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1220659895227929421, guid: 367c406a72cb0f24cb32fdc9f786e4a3,
         type: 3}
       propertyPath: m_NormalizedViewPortRect.width

@@ -129,8 +129,8 @@ public class PartialEnlargement : MonoBehaviour
             if (Input.touches[0].pressure > 0)
             {
                 PreVal = Input.touches[0].pressure;
-                PreVal = Mathf.Clamp(PreVal, 0, 1.5f);
-                ModeratePressure();
+                PreVal = Mathf.Clamp(PreVal,0,1.5f);
+                //Debug.Log(Input.touches[0].pressure);
             }
         }
     }
@@ -143,14 +143,13 @@ public class PartialEnlargement : MonoBehaviour
 
             if (touch.phase == TouchPhase.Ended)
             {
-                //圧力値、表示圧力を初期化
-                minmaxText.text = "Min=0,Max=100 : 0" ;
+                minmaxText.text = "Min=0,Max=150 : 0" ;
                 PreVal = 0;
             }
 
-            if (touch.phase == TouchPhase.Moved)//画面に触れているときに圧力値を表示する
+            if (touch.phase == TouchPhase.Moved)
             {
-                minmaxText.text = "Min=0,Max=100 : " + Mathf.FloorToInt(((PreVal * 100)/150)*100);
+                minmaxText.text = "Min=0,Max=150 : " + Mathf.FloorToInt(PreVal * 100);
             }
         }
        
@@ -162,36 +161,4 @@ public class PartialEnlargement : MonoBehaviour
         sw.Flush();// StreamWriterのバッファに書き出し残しがないか確認
         sw.Close();// ファイルを閉じる
     }
-    void ModeratePressure()
-    {
-        if (30 >= ((PreVal * 100) / 150) * 100)
-        {
-            PreVal = 0.45f;//30
-        }
-        else if (30 <= ((PreVal * 100) / 150) * 100 && 40 >= ((PreVal * 100) / 150) * 100)
-        {
-            PreVal = 0.525f;//35
-        }
-        else if (40 <= ((PreVal * 100) / 150) * 100 && 50 >= ((PreVal * 100) / 150) * 100)
-        {
-            PreVal = 0.675f;//45
-        }
-        else if (50 <= ((PreVal * 100) / 150) * 100 && 60 >= ((PreVal * 100) / 150) * 100)
-        {
-            PreVal = 0.825f;//55
-        }
-        else if (60 <= ((PreVal * 100) / 150) * 100 && 80 >= ((PreVal * 100) / 150) * 100)
-        {
-            PreVal = 1.05f;//70
-        }
-        else if (80 <= ((PreVal * 100) / 150) * 100 && 95 >= ((PreVal * 100) / 150) * 100)
-        {
-            PreVal = 1.35f;//90
-        }
-        else if (95 <= ((PreVal * 100) / 150) * 100)
-        {
-            PreVal = 1.5f;//100
-        }
-    }
-
 }

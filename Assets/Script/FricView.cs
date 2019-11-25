@@ -28,7 +28,9 @@ public class FricView : MonoBehaviour
     {
 
         fric();
-        imageRect.localPosition = new Vector3(pos.x, Mathf.Clamp(pos.y, posRange.min, posRange.max), pos.z);
+        pos.y = Mathf.Clamp(pos.y, posRange.min, posRange.max);
+        imageRect.localPosition = new Vector3(pos.x,pos.y , pos.z);
+        /*
         if (pos.y <= posRange.min)
         {
             pos.y = posRange.min;
@@ -37,6 +39,7 @@ public class FricView : MonoBehaviour
         {
             pos.y = posRange.max;
         }
+        */
 
     }
     public void fric()
@@ -55,14 +58,14 @@ public class FricView : MonoBehaviour
                 endTouch = touchPos;
                 //Debug.Log("end:" + endTouch);
             }
-            if (beganTouch.y+100 <= touchPos.y)
+            if (1720 <= touchPos.y)
             {
-                pos.y -= 10; 
+                pos.y -= 10 ; 
                     //(touchPos.y / 0.5f) - beganTouch.y;
             }
-            else if (beganTouch.y -100 >= touchPos.y)
+            else if (200 >= touchPos.y)
             {
-                pos.y += 10;
+                pos.y += 10 ;
                     //beganTouch.y - (touchPos.y / 0.5f);
             }
         }

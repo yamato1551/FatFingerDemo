@@ -14,7 +14,7 @@ public class PartialEnlargement : MonoBehaviour
     Vector2 touchpos//タッチポジション
         , subcamrect;//サブカメラの発生位置
     bool onflag = false;//圧力検知を行わせるフラグ
-    bool Lensflag=true;
+    bool Lensflag = true;
     float PreVal;//圧力値
     MagnifierCheck macheck;
     public GameObject[] EnableObj;//見えなくするオブジェクト
@@ -23,13 +23,21 @@ public class PartialEnlargement : MonoBehaviour
     public static int touchTimes = 0;
     public enum Method
     {
-        UpperPart,
+        Neutral,
         Lens,
     }
+    public enum SubCameraLensPosition
+    {
+        Upper,
+        Left,
+        UpperLeft
+    }
     public Method _method;
+    public SubCameraLensPosition _SubCamLensPos;
     // Start is called before the first frame update
     void Start()
     {
+        Npos(540,960);
         //macheck = GameObject.Find("Canvas/LensOnOff").GetComponent<MagnifierCheck>();
         minmaxText = minmaxText.GetComponent<Text>();
         TouchposUI = GameObject.Find("Canvas/TouchPoint");
@@ -58,18 +66,22 @@ public class PartialEnlargement : MonoBehaviour
             }
         }
 
+        SwitchNorL();
+        MinMaxTextChange();
+    }
+    void SwitchNorL()
+    {
         switch (_method)//カメラの配置やuiの配置は手動
         {
-            case Method.UpperPart://拡大画面が上部の場合,サブカメラの位置を変更しているだけ
+            case Method.Neutral://拡大画面が上部の場合,サブカメラの位置を変更しているだけ
                 subcampos.x = touchpos.x;
                 subcampos.y = touchpos.y;
                 subcampos.z = -1000 + (PreVal * 500);
                 SubCam.transform.position = new Vector3(subcampos.x, subcampos.y, subcampos.z);
-                //Debug.Log("cam:" + subcampos);
-                //Debug.Log("touch:" + touch.position);
+                SwitchPos();
                 break;
             case Method.Lens://拡大画面が画面内の場合
-                Lensflag = macheck.Checkflag;
+                //Lensflag = macheck.Checkflag;
 
                 //サブカメラの位置------------------------
                 subcampos.x = touchpos.x;
@@ -87,10 +99,28 @@ public class PartialEnlargement : MonoBehaviour
                 }
                 SubCam.transform.position = new Vector3(subcampos.x, subcampos.y, subcampos.z);
                 _SubCam.rect = new Rect(subcamrect.x, subcamrect.y, 0.3f, 0.15f);
+                _SubCam.fieldOfView = 25;
                 break;
         }
-       
-        MinMaxTextChange();
+
+    }
+    void SwitchPos()
+    {
+        switch (_SubCamLensPos)
+        {
+            case SubCameraLensPosition.Upper:
+                _SubCam.rect = new Rect(0, 0.9f, 1, 0.1f);
+                _SubCam.fieldOfView = 12;
+                break;
+            case SubCameraLensPosition.Left:
+                _SubCam.rect = new Rect(0,0,0.2f,1);
+                _SubCam.fieldOfView = 100;
+                break;
+            case SubCameraLensPosition.UpperLeft:
+                _SubCam.rect = new Rect(0, 0.9f, 0.2f, 0.1f);
+                _SubCam.fieldOfView = 25;
+                break;
+        }
     }
     void TouchLocation()
     {
@@ -119,7 +149,7 @@ public class PartialEnlargement : MonoBehaviour
                 for (int i = 0; i < EnableObj.Length; i++)//開始時に特定のオブジェクトを見えなくする
                 {
                     EnableObj[i].SetActive(false);
-                     
+
                 }
             }
 
@@ -129,8 +159,8 @@ public class PartialEnlargement : MonoBehaviour
             if (Input.touches[0].pressure > 0)
             {
                 PreVal = Input.touches[0].pressure;
-                PreVal = Mathf.Clamp(PreVal,0,1.5f);
-                //Debug.Log(Input.touches[0].pressure);
+                PreVal = Mathf.Clamp(PreVal, 0, 1.5f);
+                //ModeratePressure();
             }
         }
     }
@@ -143,22 +173,59 @@ public class PartialEnlargement : MonoBehaviour
 
             if (touch.phase == TouchPhase.Ended)
             {
-                minmaxText.text = "Min=0,Max=150 : 0" ;
+                //圧力値、表示圧力を初期化
+                minmaxText.text = "Min=0,Max=100 : 0";
                 PreVal = 0;
             }
 
-            if (touch.phase == TouchPhase.Moved)
+            if (touch.phase == TouchPhase.Moved)//画面に触れているときに圧力値を表示する
             {
-                minmaxText.text = "Min=0,Max=150 : " + Mathf.FloorToInt(PreVal * 100);
+                minmaxText.text = "Min=0,Max=100 : " + Mathf.FloorToInt(((PreVal * 100) / 150) * 100);
             }
         }
-       
+
     }
     void SubjectNumber(int num)
     {
         StreamWriter sw = new StreamWriter(Application.dataPath + "/TextData.txt", true);
-        sw.WriteLine("被験者番号:"+num);// ファイルに書き出したあと改行
+        sw.WriteLine("被験者番号:" + num);// ファイルに書き出したあと改行
         sw.Flush();// StreamWriterのバッファに書き出し残しがないか確認
         sw.Close();// ファイルを閉じる
+    }
+    void Npos(float Nposx,float NposY)
+    {
+        touchpos.x = Nposx;
+        touchpos.y = NposY;
+    }
+    void ModeratePressure()
+    {
+        if (30 >= ((PreVal * 100) / 150) * 100)
+        {
+            PreVal = 0.45f;//30
+        }
+        else if (30 <= ((PreVal * 100) / 150) * 100 && 40 >= ((PreVal * 100) / 150) * 100)
+        {
+            PreVal = 0.525f;//35
+        }
+        else if (40 <= ((PreVal * 100) / 150) * 100 && 50 >= ((PreVal * 100) / 150) * 100)
+        {
+            PreVal = 0.675f;//45
+        }
+        else if (50 <= ((PreVal * 100) / 150) * 100 && 60 >= ((PreVal * 100) / 150) * 100)
+        {
+            PreVal = 0.825f;//55
+        }
+        else if (60 <= ((PreVal * 100) / 150) * 100 && 80 >= ((PreVal * 100) / 150) * 100)
+        {
+            PreVal = 1.05f;//70
+        }
+        else if (80 <= ((PreVal * 100) / 150) * 100 && 95 >= ((PreVal * 100) / 150) * 100)
+        {
+            PreVal = 1.35f;//90
+        }
+        else if (95 <= ((PreVal * 100) / 150) * 100)
+        {
+            PreVal = 1.5f;//100
+        }
     }
 }

@@ -7,6 +7,7 @@ public class TapErrorDebug : MonoBehaviour
 {
     Image thisImage;
     public int buttonNum;
+
    
     StreamWriter sw;
     public enum TouchResult
@@ -18,7 +19,8 @@ public class TapErrorDebug : MonoBehaviour
     void Start()
     {
         thisImage = this.gameObject.GetComponent<Image>();
-     
+        SceneMaster.buttonBumbers++;
+        buttonNum = SceneMaster.buttonBumbers;
     }
     void Update()
     {
@@ -38,9 +40,9 @@ public class TapErrorDebug : MonoBehaviour
                 thisImage.color = new Color(1, 1, 1, 100f / 255f);
                 if (touch.phase == TouchPhase.Ended)
                 {
-                    PartialEnlargement.touchTimes++;
+                    SceneMaster.touchTimes++;
                     sw = new StreamWriter(Application.dataPath + "/TextData.txt", true);
-                    sw.WriteLine("タッチしたボタン:"+buttonNum+"タッチ回数:"+PartialEnlargement.touchTimes);// ファイルに書き出したあと改行
+                    sw.WriteLine("タッチしたボタン:"+buttonNum+"タッチ回数:"+SceneMaster.touchTimes);// ファイルに書き出したあと改行
                     sw.Flush();// StreamWriterのバッファに書き出し残しがないか確認
                     sw.Close();// ファイルを閉じる
                     /*

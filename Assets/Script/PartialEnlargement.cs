@@ -20,7 +20,7 @@ public class PartialEnlargement : MonoBehaviour
     public GameObject[] EnableObj;//見えなくするオブジェクト
     public Text minmaxText;
     public int notInitializationTimes;
-    public static int touchTimes = 0;
+    public RectTransform MainField;
     public enum Method
     {
         Neutral,
@@ -41,6 +41,7 @@ public class PartialEnlargement : MonoBehaviour
         //macheck = GameObject.Find("Canvas/LensOnOff").GetComponent<MagnifierCheck>();
         minmaxText = minmaxText.GetComponent<Text>();
         TouchposUI = GameObject.Find("Canvas/TouchPoint");
+        MainField = GameObject.Find("Canvas/MainField").GetComponent<RectTransform>();
         SubCam = GameObject.Find("SubCamera");
         _SubCam = SubCam.GetComponent<Camera>();
         for (int i = 0; i < EnableObj.Length; i++)//開始時に特定のオブジェクトを見えなくする
@@ -106,21 +107,26 @@ public class PartialEnlargement : MonoBehaviour
     }
     void SwitchPos()
     {
+        
         switch (_SubCamLensPos)
         {
             case SubCameraLensPosition.Upper:
                 _SubCam.rect = new Rect(0, 0.9f, 1, 0.1f);
                 _SubCam.fieldOfView = 12;
+                MainField.localPosition = new Vector3(0, -200, 0);
                 break;
             case SubCameraLensPosition.Left:
-                _SubCam.rect = new Rect(0,0,0.2f,1);
+                _SubCam.rect = new Rect(0, 0, 0.2f, 1);
                 _SubCam.fieldOfView = 100;
+                MainField.localPosition = new Vector3(0, 0, 0);
                 break;
             case SubCameraLensPosition.UpperLeft:
                 _SubCam.rect = new Rect(0, 0.9f, 0.2f, 0.1f);
                 _SubCam.fieldOfView = 25;
+                MainField.localPosition = new Vector3(0, 0, 0);
                 break;
         }
+        
     }
     void TouchLocation()
     {

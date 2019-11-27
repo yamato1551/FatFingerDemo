@@ -8226,7 +8226,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1031705091
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8279,7 +8279,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1031705090}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72fb57142b34f934d998348fdbe4d10a, type: 3}
   m_Name: 
@@ -8336,6 +8336,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SubCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 1220659895227929423, guid: 367c406a72cb0f24cb32fdc9f786e4a3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1220659895227929421, guid: 367c406a72cb0f24cb32fdc9f786e4a3,
         type: 3}
@@ -9323,7 +9328,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1110569278
 RectTransform:
   m_ObjectHideFlags: 0

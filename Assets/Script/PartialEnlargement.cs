@@ -121,7 +121,7 @@ public class PartialEnlargement : MonoBehaviour
                 MainField.localPosition = new Vector3(0, 0, 0);
                 break;
             case SubCameraLensPosition.UpperLeft:
-                _SubCam.rect = new Rect(0, 0.9f, 0.2f, 0.1f);
+                _SubCam.rect = new Rect(0, 0.8f, 0.4f, 0.3f);
                 _SubCam.fieldOfView = 25;
                 MainField.localPosition = new Vector3(0, 0, 0);
                 break;

@@ -5182,12 +5182,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 687344608}
   m_CullTransparentMesh: 0
---- !u!1 &688568090 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 742906696081239368, guid: 4356d8a286c0d954da4803248ed0e870,
-    type: 3}
-  m_PrefabInstance: {fileID: 2068449091}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &688568091 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 742906696081239371, guid: 4356d8a286c0d954da4803248ed0e870,
@@ -7137,6 +7131,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 891788401}
   m_CullTransparentMesh: 0
+--- !u!1 &895181164 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2686963853853664323, guid: 8dbbc04dbc73abe41bcf8a4a8975c2f3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1828816257}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &897044730
 GameObject:
   m_ObjectHideFlags: 0
@@ -8361,6 +8361,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_NormalizedViewPortRect.height
       value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1220659895227929421, guid: 367c406a72cb0f24cb32fdc9f786e4a3,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.x
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 1220659895227929420, guid: 367c406a72cb0f24cb32fdc9f786e4a3,
         type: 3}
@@ -9627,25 +9632,6 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 1034091627}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1135289093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1135289091}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c53fa66dfad838429441be443fe510e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnableObj:
-  - {fileID: 688568090}
-  minmaxText: {fileID: 429406986}
-  notInitializationTimes: 2
-  MainField: {fileID: 0}
-  _method: 0
-  _SubCamLensPos: 0
 --- !u!1 &1135811807
 GameObject:
   m_ObjectHideFlags: 0
@@ -11160,6 +11146,7 @@ GameObject:
   - component: {fileID: 1259441041}
   - component: {fileID: 1259441040}
   - component: {fileID: 1259441039}
+  - component: {fileID: 1259441043}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -11242,13 +11229,32 @@ RectTransform:
   - {fileID: 1202976163}
   - {fileID: 688568091}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 540, y: 960}
   m_SizeDelta: {x: 1080, y: 1920}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1259441043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259441038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c53fa66dfad838429441be443fe510e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnableObj:
+  - {fileID: 895181164}
+  - {fileID: 1135289091}
+  minmaxText: {fileID: 429406986}
+  subjectNumber: 0
+  _method: 0
+  _SubCamLensPos: 0
 --- !u!1 &1266854277
 GameObject:
   m_ObjectHideFlags: 0
@@ -12683,7 +12689,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1407700266}
   - component: {fileID: 1407700265}
-  - component: {fileID: 1407700264}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -12691,18 +12696,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1407700264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1407700263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c9e0197733c8e64487b768b444b5a9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!20 &1407700265
 Camera:
   m_ObjectHideFlags: 0
@@ -17108,6 +17101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1859162920}
   - component: {fileID: 1859162919}
+  - component: {fileID: 1859162921}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -17187,8 +17181,21 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1859162921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859162918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9e0197733c8e64487b768b444b5a9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touchs: 0
 --- !u!1 &1860158909
 GameObject:
   m_ObjectHideFlags: 0

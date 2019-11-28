@@ -19,8 +19,9 @@ public class PartialEnlargement : MonoBehaviour
     MagnifierCheck macheck;
     public GameObject[] EnableObj;//見えなくするオブジェクト
     public Text minmaxText;
-    public int notInitializationTimes;
-    public RectTransform MainField;
+    public int subjectNumber;
+    private RectTransform MainField;
+    private bool lensEnableFlag;
     public enum Method
     {
         Neutral,
@@ -44,11 +45,7 @@ public class PartialEnlargement : MonoBehaviour
         MainField = GameObject.Find("Canvas/MainField").GetComponent<RectTransform>();
         SubCam = GameObject.Find("SubCamera");
         _SubCam = SubCam.GetComponent<Camera>();
-        for (int i = 0; i < EnableObj.Length; i++)//開始時に特定のオブジェクトを見えなくする
-        {
-            EnableObj[i].SetActive(false);
-        }
-        SubjectNumber(notInitializationTimes);
+        SubjectNumber(subjectNumber);
     }
     void Update()
     {
@@ -61,10 +58,12 @@ public class PartialEnlargement : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < EnableObj.Length; i++)//開始時に特定のオブジェクトを見えなくする
+            
+            for (int i = 0; i < EnableObj.Length; i++)
             {
                 EnableObj[i].SetActive(false);
             }
+            
         }
 
         SwitchNorL();
@@ -111,17 +110,26 @@ public class PartialEnlargement : MonoBehaviour
         switch (_SubCamLensPos)
         {
             case SubCameraLensPosition.Upper:
+                lensEnableFlag = false;
                 _SubCam.rect = new Rect(0, 0.9f, 1, 0.1f);
                 _SubCam.fieldOfView = 12;
                 MainField.localPosition = new Vector3(0, -200, 0);
                 break;
             case SubCameraLensPosition.Left:
+                lensEnableFlag = true;
                 _SubCam.rect = new Rect(0, 0, 0.2f, 1);
                 _SubCam.fieldOfView = 100;
                 MainField.localPosition = new Vector3(0, 0, 0);
                 break;
             case SubCameraLensPosition.UpperLeft:
-                _SubCam.rect = new Rect(0, 0.8f, 0.4f, 0.3f);
+                lensEnableFlag = true;
+                if (touchpos.x > 540)
+                {
+                    _SubCam.rect = new Rect(0, 0.8f, 0.4f, 0.3f);
+                }else if (touchpos.x < 540 && touchpos.y > 1344)
+                {
+                    _SubCam.rect = new Rect(0.6f, 0.8f, 0.4f, 0.3f);
+                }
                 _SubCam.fieldOfView = 25;
                 MainField.localPosition = new Vector3(0, 0, 0);
                 break;
@@ -144,18 +152,26 @@ public class PartialEnlargement : MonoBehaviour
             if (touch.phase == TouchPhase.Began)
             {
                 onflag = true;
-                for (int i = 0; i < EnableObj.Length; i++)//開始時に特定のオブジェクトを見えなくする
-                {
-                    EnableObj[i].SetActive(true);
+                TouchposUI.SetActive(true);
+                if (lensEnableFlag==true) {
+                    for (int i = 0; i < EnableObj.Length; i++)//開始時に特定のオブジェクトを見えなくする
+                    {
+                        EnableObj[i].SetActive(true);
+                    }
                 }
             }
             if (touch.phase == TouchPhase.Ended)
             {
                 onflag = false;
-                for (int i = 0; i < EnableObj.Length; i++)//開始時に特定のオブジェクトを見えなくする
+                TouchposUI.SetActive(false);
+                if (lensEnableFlag)
                 {
-                    EnableObj[i].SetActive(false);
+                    
+                    for (int i = 0; i < EnableObj.Length; i++)//開始時に特定のオブジェクトを見えなくする
+                    {
+                        EnableObj[i].SetActive(false);
 
+                    }
                 }
             }
 

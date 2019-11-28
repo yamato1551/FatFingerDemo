@@ -6,6 +6,7 @@ public class SceneMaster : MonoBehaviour
 {
     public static int touchTimes = 0;
     public static int buttonBumbers = 0;
+    public int touchs;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +16,15 @@ public class SceneMaster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.touchCount > 0)
+        {
+            var touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Ended)
+            {
+                touchTimes++;
+            }
+
+            touchs = touchTimes;
+        }
     }
 }

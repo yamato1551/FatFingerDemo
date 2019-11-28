@@ -31,7 +31,7 @@ public class TapErrorDebug : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
             var touchpos = touch.position;
-
+            
             if (buttonpos.x - (buttonsize.x / 2) < touchpos.x
            && buttonpos.x + (buttonsize.x / 2) > touchpos.x
            && buttonpos.y - (buttonsize.y/2) < touchpos.y
@@ -40,7 +40,7 @@ public class TapErrorDebug : MonoBehaviour
                 thisImage.color = new Color(1, 1, 1, 100f / 255f);
                 if (touch.phase == TouchPhase.Ended)
                 {
-                    SceneMaster.touchTimes++;
+                    //SceneMaster.touchTimes++;
                     sw = new StreamWriter(Application.dataPath + "/TextData.txt", true);
                     sw.WriteLine("タッチしたボタン:"+buttonNum+"タッチ回数:"+SceneMaster.touchTimes);// ファイルに書き出したあと改行
                     sw.Flush();// StreamWriterのバッファに書き出し残しがないか確認

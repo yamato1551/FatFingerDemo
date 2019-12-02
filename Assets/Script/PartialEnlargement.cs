@@ -33,8 +33,14 @@ public class PartialEnlargement : MonoBehaviour
         Left,
         UpperLeft
     }
+    public enum LensSizeCase
+    {
+        Small,
+        Big
+    }
     public Method _method;
     public SubCameraLensPosition _SubCamLensPos;
+    public LensSizeCase _lensSizeCase; 
     // Start is called before the first frame update
     void Start()
     {
@@ -123,12 +129,27 @@ public class PartialEnlargement : MonoBehaviour
                 break;
             case SubCameraLensPosition.UpperLeft:
                 lensEnableFlag = true;
-                if (touchpos.x > 540)
-                {
-                    _SubCam.rect = new Rect(0, 0.8f, 0.4f, 0.3f);
-                }else if (touchpos.x < 540 && touchpos.y > 1344)
-                {
-                    _SubCam.rect = new Rect(0.6f, 0.8f, 0.4f, 0.3f);
+                switch (_lensSizeCase) {
+                    case LensSizeCase.Big:
+                    if (touchpos.x > 540)
+                    {
+                        _SubCam.rect = new Rect(0, 0.8f, 0.4f, 0.3f);
+                    }
+                    else if (touchpos.x < 540 && touchpos.y > 1344)
+                    {
+                        _SubCam.rect = new Rect(0.6f, 0.8f, 0.4f, 0.3f);
+                    }
+                    break;
+                    case LensSizeCase.Small:
+                    if (touchpos.x > 540)
+                    {
+                        _SubCam.rect = new Rect(0, 0.9f, 0.2f, 0.2f);
+                    }
+                    else if (touchpos.x < 540 && touchpos.y > 1728)
+                    {
+                        _SubCam.rect = new Rect(0.8f, 0.9f, 0.2f, 0.2f);
+                    }
+                        break;
                 }
                 _SubCam.fieldOfView = 25;
                 MainField.localPosition = new Vector3(0, 0, 0);

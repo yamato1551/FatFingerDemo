@@ -6,26 +6,30 @@ using System.IO;
 //サブカメラの動き制御
 public class PartialEnlargement : MonoBehaviour
 {
-    GameObject SubCam;//サブカメラ格納
+    GameObject SubCam,mainCam;//サブカメラ格納
     GameObject TouchposUI;//タッチした場所に出るUI
-    Camera _SubCam;
+    Camera _SubCam,_mainCam;
     Touch touch;
-    Vector3 subcampos;//サブカメラのポジション
+    Vector3 subcampos,//サブカメラのポジション
+            maincampos;//メインカメラのポジション
     Vector2 touchpos//タッチポジション
         , subcamrect;//サブカメラの発生位置
-    bool onflag = false;//圧力検知を行わせるフラグ
-    bool Lensflag = true;
-    float PreVal;//圧力値
+
+    private bool onflag = false;//圧力検知を行わせるフラグ
+    private bool Lensflag = true;
+    private float PreVal;//圧力値
     MagnifierCheck macheck;
     public GameObject[] EnableObj;//見えなくするオブジェクト
     public Text minmaxText;
     public int subjectNumber;
     private RectTransform MainField;
-    private bool lensEnableFlag;
+    private bool lensEnableFlag,touchFlag;
     public enum Method
     {
         Neutral,
         Lens,
+        All,
+        Non
     }
     public enum SubCameraLensPosition
     {
@@ -36,6 +40,7 @@ public class PartialEnlargement : MonoBehaviour
     public enum LensSizeCase
     {
         Small,
+        Neutral,
         Big
     }
     public Method _method;
@@ -49,6 +54,8 @@ public class PartialEnlargement : MonoBehaviour
         minmaxText = minmaxText.GetComponent<Text>();
         TouchposUI = GameObject.Find("Canvas/TouchPoint");
         MainField = GameObject.Find("Canvas/MainField").GetComponent<RectTransform>();
+        mainCam = GameObject.Find("Main Camera");
+        _mainCam = mainCam.GetComponent<Camera>();
         SubCam = GameObject.Find("SubCamera");
         _SubCam = SubCam.GetComponent<Camera>();
         SubjectNumber(subjectNumber);
@@ -86,7 +93,7 @@ public class PartialEnlargement : MonoBehaviour
                 SubCam.transform.position = new Vector3(subcampos.x, subcampos.y, subcampos.z);
                 SwitchPos();
                 break;
-            case Method.Lens://拡大画面が画面内の場合
+            case Method.Lens://レンズ拡大
                 //Lensflag = macheck.Checkflag;
 
                 //サブカメラの位置------------------------
@@ -106,6 +113,37 @@ public class PartialEnlargement : MonoBehaviour
                 SubCam.transform.position = new Vector3(subcampos.x, subcampos.y, subcampos.z);
                 _SubCam.rect = new Rect(subcamrect.x, subcamrect.y, 0.3f, 0.15f);
                 _SubCam.fieldOfView = 25;
+                break;
+            case Method.All://全画面拡大
+                for (int i = 0; i < EnableObj.Length; i++)//開始時に特定のオブジェクトを見えなくする
+                {
+                    EnableObj[i].SetActive(false);
+                }
+                    TouchposUI.SetActive(false);
+                    touchFlag = false;
+                    maincampos.x = 540;
+                    maincampos.y = 960;
+                    maincampos.z = -1000;
+                    if (touchFlag == true)
+                    {
+                        maincampos.x = touchpos.x;
+                        maincampos.y = touchpos.y;
+                        maincampos.z = -500;
+                    }
+                    else
+                    {
+                        maincampos.x = 540;
+                        maincampos.y = 960;
+                        maincampos.z = -1000;
+                    }
+                    mainCam.transform.position = new Vector3();
+                break;
+            case Method.Non:
+                TouchposUI.SetActive(false);
+                for (int i = 0; i < EnableObj.Length; i++)//開始時に特定のオブジェクトを見えなくする
+                {
+                    EnableObj[i].SetActive(false);
+                }
                 break;
         }
 
@@ -130,25 +168,36 @@ public class PartialEnlargement : MonoBehaviour
             case SubCameraLensPosition.UpperLeft:
                 lensEnableFlag = true;
                 switch (_lensSizeCase) {
-                    case LensSizeCase.Big:
-                    if (touchpos.x > 540)
-                    {
-                        _SubCam.rect = new Rect(0, 0.8f, 0.4f, 0.3f);
-                    }
-                    else if (touchpos.x < 540 && touchpos.y > 1344)
-                    {
-                        _SubCam.rect = new Rect(0.6f, 0.8f, 0.4f, 0.3f);
-                    }
-                    break;
+                   
                     case LensSizeCase.Small:
-                    if (touchpos.x > 540)
-                    {
-                        _SubCam.rect = new Rect(0, 0.9f, 0.2f, 0.2f);
-                    }
-                    else if (touchpos.x < 540 && touchpos.y > 1728)
-                    {
-                        _SubCam.rect = new Rect(0.8f, 0.9f, 0.2f, 0.2f);
-                    }
+                        if (touchpos.x > 540)
+                        {
+                            _SubCam.rect = new Rect(0, 0.9f, 0.2f, 0.2f);
+                        }
+                        else if (touchpos.x < 540 && touchpos.y > 1728)
+                        {
+                            _SubCam.rect = new Rect(0.8f, 0.9f, 0.2f, 0.2f);
+                        }
+                        break;
+                    case LensSizeCase.Neutral:
+                        if (touchpos.x > 540)
+                        {
+                            _SubCam.rect = new Rect(0, 0.8f, 0.4f, 0.3f);
+                        }
+                        else if (touchpos.x < 540 && touchpos.y > 1344)
+                        {
+                            _SubCam.rect = new Rect(0.6f, 0.8f, 0.4f, 0.3f);
+                        }
+                        break;
+                    case LensSizeCase.Big:
+                        if (touchpos.x > 540)
+                        {
+                            _SubCam.rect = new Rect(0, 0.7f, 0.6f, 0.4f);
+                        }
+                        else if (touchpos.x < 540 && touchpos.y > 1344)
+                        {
+                            _SubCam.rect = new Rect(0.4f, 0.7f, 0.6f, 0.4f);
+                        }
                         break;
                 }
                 _SubCam.fieldOfView = 25;
@@ -195,7 +244,10 @@ public class PartialEnlargement : MonoBehaviour
                     }
                 }
             }
-
+            if(touch.phase == TouchPhase.Moved)
+            {
+                touchFlag = true;
+            }
         }
         if (onflag == true)
         {

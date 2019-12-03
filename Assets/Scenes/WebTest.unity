@@ -11030,7 +11030,7 @@ GameObject:
   - component: {fileID: 1258561651}
   - component: {fileID: 1258561650}
   m_Layer: 5
-  m_Name: dicord
+  m_Name: discord
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11253,9 +11253,9 @@ MonoBehaviour:
   - {fileID: 1135289091}
   minmaxText: {fileID: 429406986}
   subjectNumber: 0
-  _method: 3
+  _method: 2
   _SubCamLensPos: 2
-  _lensSizeCase: 1
+  _lensSizeCase: 0
 --- !u!1 &1266854277
 GameObject:
   m_ObjectHideFlags: 0
@@ -12722,7 +12722,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 87.26499
+  field of view: 87
   orthographic: 0
   orthographic size: 5
   m_Depth: -1

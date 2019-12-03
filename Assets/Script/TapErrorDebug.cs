@@ -7,7 +7,7 @@ public class TapErrorDebug : MonoBehaviour
 {
     Image thisImage;
     public int buttonNum;
-
+    PartialEnlargement par;
    
     StreamWriter sw;
     public enum TouchResult
@@ -31,7 +31,7 @@ public class TapErrorDebug : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
             var touchpos = touch.position;
-            
+           
             if (buttonpos.x - (buttonsize.x / 2) < touchpos.x
            && buttonpos.x + (buttonsize.x / 2) > touchpos.x
            && buttonpos.y - (buttonsize.y/2) < touchpos.y

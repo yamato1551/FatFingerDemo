@@ -8,6 +8,7 @@ public class PartialEnlargement : MonoBehaviour
 {
     GameObject SubCam,mainCam;//サブカメラ格納
     GameObject TouchposUI;//タッチした場所に出るUI
+    private RectTransform mainBack;
     Camera _SubCam,_mainCam;
     Touch touch;
     Vector3 subcampos,//サブカメラのポジション
@@ -24,6 +25,7 @@ public class PartialEnlargement : MonoBehaviour
     public int subjectNumber;
     private RectTransform MainField;
     private bool lensEnableFlag,touchFlag;
+
     public enum Method
     {
         Neutral,
@@ -50,8 +52,10 @@ public class PartialEnlargement : MonoBehaviour
     void Start()
     {
         Npos(540,960);
+        touchFlag = false;
         //macheck = GameObject.Find("Canvas/LensOnOff").GetComponent<MagnifierCheck>();
         minmaxText = minmaxText.GetComponent<Text>();
+        mainBack = GameObject.Find("Canvas/MainField/discord").GetComponent<RectTransform>();
         TouchposUI = GameObject.Find("Canvas/TouchPoint");
         MainField = GameObject.Find("Canvas/MainField").GetComponent<RectTransform>();
         mainCam = GameObject.Find("Main Camera");
@@ -115,28 +119,36 @@ public class PartialEnlargement : MonoBehaviour
                 _SubCam.fieldOfView = 25;
                 break;
             case Method.All://全画面拡大
-                for (int i = 0; i < EnableObj.Length; i++)//開始時に特定のオブジェクトを見えなくする
+
+                for (int i = 0; i < EnableObj.Length; i++)
                 {
                     EnableObj[i].SetActive(false);
                 }
-                    TouchposUI.SetActive(false);
-                    touchFlag = false;
-                    maincampos.x = 540;
-                    maincampos.y = 960;
-                    maincampos.z = -1000;
-                    if (touchFlag == true)
+                mainBack.position = new Vector2(touchpos.x, touchpos.y);
+                /*
+                if (Input.touchCount > 0)
+                {
+                    touch = Input.GetTouch(0);
+                    if (touch.phase == TouchPhase.Began)
                     {
-                        maincampos.x = touchpos.x;
-                        maincampos.y = touchpos.y;
-                        maincampos.z = -500;
+                        touchFlag = true;
+
                     }
-                    else
+                    if (touch.phase == TouchPhase.Ended)
                     {
-                        maincampos.x = 540;
-                        maincampos.y = 960;
-                        maincampos.z = -1000;
+                        touchFlag = false;
+
                     }
-                    mainCam.transform.position = new Vector3();
+                }
+                
+                maincampos.x = touchpos.x;
+                maincampos.y = touchpos.y;
+                maincampos.z = -1000;
+                _mainCam.fieldOfView = 40;
+                TouchposUI.SetActive(false);
+                Debug.Log(touchpos);
+                mainCam.transform.position = new Vector3(maincampos.x, maincampos.y, maincampos.z);
+                */
                 break;
             case Method.Non:
                 TouchposUI.SetActive(false);
@@ -244,10 +256,7 @@ public class PartialEnlargement : MonoBehaviour
                     }
                 }
             }
-            if(touch.phase == TouchPhase.Moved)
-            {
-                touchFlag = true;
-            }
+            
         }
         if (onflag == true)
         {

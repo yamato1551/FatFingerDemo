@@ -60,12 +60,12 @@ public class FricView : MonoBehaviour
             }
             if (1720 <= touchPos.y)
             {
-                pos.y -= 10 ; 
+                pos.y -= 30 ; 
                     //(touchPos.y / 0.5f) - beganTouch.y;
             }
             else if (200 >= touchPos.y)
             {
-                pos.y += 10 ;
+                pos.y += 30 ;
                     //beganTouch.y - (touchPos.y / 0.5f);
             }
         }

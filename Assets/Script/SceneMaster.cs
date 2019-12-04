@@ -7,6 +7,8 @@ public class SceneMaster : MonoBehaviour
     public static int touchTimes = 0;
     public static int buttonBumbers = 0;
     public int touchs;
+    public static bool tapBaseChange=false;
+
     // Start is called before the first frame update
     void Start()
     {

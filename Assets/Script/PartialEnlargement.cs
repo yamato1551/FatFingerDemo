@@ -25,7 +25,6 @@ public class PartialEnlargement : MonoBehaviour
     public int subjectNumber;
     private RectTransform MainField;
     private bool lensEnableFlag,touchFlag;
-
     public enum Method
     {
         Neutral,
@@ -91,6 +90,7 @@ public class PartialEnlargement : MonoBehaviour
         switch (_method)//カメラの配置やuiの配置は手動
         {
             case Method.Neutral://拡大画面が上部の場合,サブカメラの位置を変更しているだけ
+                SceneMaster.tapBaseChange = false;
                 subcampos.x = touchpos.x;
                 subcampos.y = touchpos.y;
                 subcampos.z = -1000 + (PreVal * 500);
@@ -98,6 +98,7 @@ public class PartialEnlargement : MonoBehaviour
                 SwitchPos();
                 break;
             case Method.Lens://レンズ拡大
+                SceneMaster.tapBaseChange = false;
                 //Lensflag = macheck.Checkflag;
 
                 //サブカメラの位置------------------------
@@ -120,12 +121,14 @@ public class PartialEnlargement : MonoBehaviour
                 break;
             case Method.All://全画面拡大
 
+                SceneMaster.tapBaseChange = true;
+
                 for (int i = 0; i < EnableObj.Length; i++)
                 {
                     EnableObj[i].SetActive(false);
                 }
-                mainBack.position = new Vector2(touchpos.x, touchpos.y);
-                /*
+                //mainBack.position = new Vector2(touchpos.x, touchpos.y);
+                
                 if (Input.touchCount > 0)
                 {
                     touch = Input.GetTouch(0);
@@ -140,15 +143,22 @@ public class PartialEnlargement : MonoBehaviour
 
                     }
                 }
-                
-                maincampos.x = touchpos.x;
-                maincampos.y = touchpos.y;
-                maincampos.z = -1000;
+                if (touchpos.x < 100)
+                {
+                    maincampos.x += 30;
+                }
+                else
+                if (touchpos.x > 980)
+                {
+                    maincampos.x = -30;
+                }
+                maincampos.x = Mathf.Clamp(maincampos.x,205,875);
+                //touchpos.x = 540;
+                //maincampos.z = -1000;
                 _mainCam.fieldOfView = 40;
                 TouchposUI.SetActive(false);
-                Debug.Log(touchpos);
-                mainCam.transform.position = new Vector3(maincampos.x, maincampos.y, maincampos.z);
-                */
+                //mainCam.transform.position = new Vector3(maincampos.x, maincampos.y, maincampos.z);
+                
                 break;
             case Method.Non:
                 TouchposUI.SetActive(false);

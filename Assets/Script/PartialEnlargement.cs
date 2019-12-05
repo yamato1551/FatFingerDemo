@@ -24,7 +24,9 @@ public class PartialEnlargement : MonoBehaviour
     public Text minmaxText;
     public int subjectNumber;
     private RectTransform MainField;
-    private bool lensEnableFlag,touchFlag;
+    private bool lensEnableFlag,magnification;
+    private Text magnificationText;
+    private GameObject uiSwitching;
     public enum Method
     {
         Neutral,
@@ -51,8 +53,9 @@ public class PartialEnlargement : MonoBehaviour
     void Start()
     {
         Npos(540,960);
-        touchFlag = false;
         //macheck = GameObject.Find("Canvas/LensOnOff").GetComponent<MagnifierCheck>();
+        magnificationText = GameObject.Find("UISwitching/Button/Text").GetComponent<Text>();
+        uiSwitching = GameObject.Find("UISwitching");
         minmaxText = minmaxText.GetComponent<Text>();
         mainBack = GameObject.Find("Canvas/MainField/discord").GetComponent<RectTransform>();
         TouchposUI = GameObject.Find("Canvas/TouchPoint");
@@ -90,6 +93,7 @@ public class PartialEnlargement : MonoBehaviour
         switch (_method)//カメラの配置やuiの配置は手動
         {
             case Method.Neutral://拡大画面が上部の場合,サブカメラの位置を変更しているだけ
+                uiSwitching.SetActive(false);
                 SceneMaster.tapBaseChange = false;
                 subcampos.x = touchpos.x;
                 subcampos.y = touchpos.y;
@@ -98,6 +102,7 @@ public class PartialEnlargement : MonoBehaviour
                 SwitchPos();
                 break;
             case Method.Lens://レンズ拡大
+                uiSwitching.SetActive(false);
                 SceneMaster.tapBaseChange = false;
                 //Lensflag = macheck.Checkflag;
 
@@ -120,45 +125,39 @@ public class PartialEnlargement : MonoBehaviour
                 _SubCam.fieldOfView = 25;
                 break;
             case Method.All://全画面拡大
-
+                uiSwitching.SetActive(true);
                 SceneMaster.tapBaseChange = true;
-
                 for (int i = 0; i < EnableObj.Length; i++)
                 {
                     EnableObj[i].SetActive(false);
                 }
                 //mainBack.position = new Vector2(touchpos.x, touchpos.y);
-                
-                if (Input.touchCount > 0)
+                if (magnification)
                 {
-                    touch = Input.GetTouch(0);
-                    if (touch.phase == TouchPhase.Began)
+                    magnificationText.text = "ON";
+                    if (touchpos.x < 100)
                     {
-                        touchFlag = true;
-
+                        maincampos.x -= 30;
                     }
-                    if (touch.phase == TouchPhase.Ended)
+                    else
+                    if (touchpos.x > 980)
                     {
-                        touchFlag = false;
-
+                        maincampos.x += 30;
                     }
-                }
-                if (touchpos.x < 100)
-                {
-                    maincampos.x += 30;
+                    maincampos.x = Mathf.Clamp(maincampos.x, 205, 875);
+                    //touchpos.x = 540;
+                    _mainCam.fieldOfView = 40;
                 }
                 else
-                if (touchpos.x > 980)
                 {
-                    maincampos.x = -30;
+                    magnificationText.text = "Off";
+                    maincampos.x = 540;
+                    maincampos.y = 960;
+                    _mainCam.fieldOfView = 87;
                 }
-                maincampos.x = Mathf.Clamp(maincampos.x,205,875);
-                //touchpos.x = 540;
-                //maincampos.z = -1000;
-                _mainCam.fieldOfView = 40;
+                maincampos.z = -1000;
                 TouchposUI.SetActive(false);
-                //mainCam.transform.position = new Vector3(maincampos.x, maincampos.y, maincampos.z);
-                
+                mainCam.transform.position = new Vector3(maincampos.x, maincampos.y, maincampos.z);                
                 break;
             case Method.Non:
                 TouchposUI.SetActive(false);
@@ -168,7 +167,17 @@ public class PartialEnlargement : MonoBehaviour
                 }
                 break;
         }
-
+    }
+    public void ManificationButton()
+    {
+        if (magnification)
+        {
+            magnification = false;
+        }
+        else
+        {
+            magnification = true;
+        }
     }
     void SwitchPos()
     {
@@ -284,14 +293,12 @@ public class PartialEnlargement : MonoBehaviour
         {
             // タッチ情報の取得
             Touch touch = Input.GetTouch(0);
-
             if (touch.phase == TouchPhase.Ended)
             {
                 //圧力値、表示圧力を初期化
                 minmaxText.text = "Min=0,Max=100 : 0";
                 PreVal = 0;
             }
-
             if (touch.phase == TouchPhase.Moved)//画面に触れているときに圧力値を表示する
             {
                 minmaxText.text = "Min=0,Max=100 : " + Mathf.FloorToInt(((PreVal * 100) / 150) * 100);
@@ -306,9 +313,9 @@ public class PartialEnlargement : MonoBehaviour
         sw.Flush();// StreamWriterのバッファに書き出し残しがないか確認
         sw.Close();// ファイルを閉じる
     }
-    void Npos(float Nposx,float NposY)
+    void Npos(float NposX,float NposY)
     {
-        touchpos.x = Nposx;
+        touchpos.x = NposX;
         touchpos.y = NposY;
     }
     void ModeratePressure()

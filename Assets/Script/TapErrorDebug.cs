@@ -34,7 +34,7 @@ public class TapErrorDebug : MonoBehaviour
     {
         var buttonpos = this.gameObject.transform.position;
         var buttonsize = this.gameObject.GetComponent<RectTransform>().sizeDelta;
-        //thisImage.color = new Color(1, 1, 1, 0);
+        thisImage.color = new Color(1, 1, 1, 0);
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);

@@ -48,11 +48,11 @@ public class PartialEnlargement : MonoBehaviour
     }
     public Method _method;
     public SubCameraLensPosition _SubCamLensPos;
-    public LensSizeCase _lensSizeCase; 
+    public LensSizeCase _lensSizeCase;
     // Start is called before the first frame update
     void Start()
     {
-        Npos(540,960);
+        Npos(540, 960);
         //macheck = GameObject.Find("Canvas/LensOnOff").GetComponent<MagnifierCheck>();
         magnificationText = GameObject.Find("UISwitching/Button/Text").GetComponent<Text>();
         uiSwitching = GameObject.Find("UISwitching");
@@ -65,6 +65,27 @@ public class PartialEnlargement : MonoBehaviour
         SubCam = GameObject.Find("SubCamera");
         _SubCam = SubCam.GetComponent<Camera>();
         SubjectNumber(subjectNumber);
+        switch (_lensSizeCase)
+        {
+
+            case LensSizeCase.Small:
+
+                _SubCam.rect = new Rect(0, 0.9f, 0.2f, 0.2f);
+
+
+                break;
+            case LensSizeCase.Neutral:
+
+                _SubCam.rect = new Rect(0, 0.8f, 0.4f, 0.3f);
+
+                break;
+            case LensSizeCase.Big:
+
+                _SubCam.rect = new Rect(0, 0.7f, 0.6f, 0.4f);
+
+                break;
+
+        }
     }
     void Update()
     {
@@ -137,15 +158,27 @@ public class PartialEnlargement : MonoBehaviour
                     magnificationText.text = "ON";
                     if (touchpos.x < 100)
                     {
-                        maincampos.x -= 30;
+                        maincampos.x -= 20;
                     }
                     else
                     if (touchpos.x > 980)
                     {
-                        maincampos.x += 30;
+                        maincampos.x += 20;
                     }
+                    if (touchpos.y >= 1720)
+                    {
+                        maincampos.y += 10;
+                    }
+                    else if(touchpos.y<=200)
+                    {
+                        maincampos.y -= 10;
+                        
+                    }
+
+                    touchpos.x = 540;
+                    touchpos.y = 960;
                     maincampos.x = Mathf.Clamp(maincampos.x, 205, 875);
-                    //touchpos.x = 540;
+                    maincampos.y = Mathf.Clamp(maincampos.y, 362, 1540);
                     _mainCam.fieldOfView = 40;
                 }
                 else

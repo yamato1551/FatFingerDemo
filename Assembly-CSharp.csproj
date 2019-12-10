@@ -77,7 +77,6 @@
     <Compile Include="Assets\Script\UI3DtouchZoomTH.cs" />
     <Compile Include="Assets\Script\UIAction.cs" />
     <Compile Include="Assets\Script\UIColumn.cs" />
-    <None Include="Assets\TextData.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/m0116311/Documents/GitHub/FatFingerDemo/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

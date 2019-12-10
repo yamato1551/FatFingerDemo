@@ -9,6 +9,7 @@ public class TapErrorDebug : MonoBehaviour
     public int buttonNum;   
     StreamWriter sw;
     private bool colorchangeflag=true;
+    private float colorFixTime=0.1f;
     void Start()
     {
         thisImage = this.gameObject.GetComponent<Image>();
@@ -16,7 +17,9 @@ public class TapErrorDebug : MonoBehaviour
     
     void Update()
     {
-        if (colorchangeflag) {
+        colorFixTime += Time.deltaTime;
+        if (colorchangeflag && colorFixTime >= 0.1f)
+        {
             thisImage.color = new Color(1, 1, 1, 0);
         }
         colorchangeflag = true;
@@ -64,6 +67,7 @@ public class TapErrorDebug : MonoBehaviour
         if (SceneMaster.tapBaseChange == true)
         {
             colorchangeflag = false;
+            colorFixTime = 0;
             thisImage.color = new Color(1, 1, 1, 100f / 255f);
             sw = new StreamWriter(Application.dataPath + "/TextData.txt", true);
             sw.WriteLine("タッチしたボタン:" + buttonNum + "タッチ回数:" + SceneMaster.touchTimes);// ファイルに書き出したあと改行

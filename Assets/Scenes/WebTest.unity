@@ -12952,10 +12952,10 @@ MonoBehaviour:
   - {fileID: 895181164}
   - {fileID: 1135289091}
   minmaxText: {fileID: 429406986}
-  subjectNumber: 1
-  _method: 0
+  subjectNumber: 10
+  _method: 2
   _SubCamLensPos: 2
-  _lensSizeCase: 2
+  _lensSizeCase: 0
 --- !u!1 &1266854277
 GameObject:
   m_ObjectHideFlags: 0
